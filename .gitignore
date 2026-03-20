@@ -1,0 +1,4 @@
+﻿.chrome-headless-profile/
+.chrome-headless-profile-reports/
+.edge-headless-profile/
+*.log

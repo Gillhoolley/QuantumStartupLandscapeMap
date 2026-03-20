@@ -1,0 +1,298 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Startups Globe</title>
+  <script src="https://unpkg.com/globe.gl"></script>
+  <style>
+    :root {
+      --bg: #06131f;
+      --panel: #0d2233;
+      --text: #e8f1ff;
+      --muted: #9bb3cc;
+      --accent: #00c2a8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: radial-gradient(circle at 20% 10%, #12324a 0%, var(--bg) 50%, #03080f 100%);
+      color: var(--text);
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      height: 100vh;
+    }
+    .panel {
+      background: rgba(9, 25, 40, 0.92);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 16px;
+      overflow: auto;
+    }
+    .panel h1 {
+      font-size: 18px;
+      margin: 0 0 8px;
+      line-height: 1.3;
+    }
+    .panel p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .control {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #0f2a3e;
+      color: var(--text);
+    }
+    .stats {
+      margin-top: 14px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      font-size: 13px;
+    }
+    .legend {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    #globe { width: 100%; height: 100vh; }
+    .tooltip {
+      font-size: 12px;
+      line-height: 1.45;
+      max-width: 260px;
+    }
+    .tooltip b { color: #fff; }
+    .footer-link { margin-top: 12px; font-size: 12px; }
+    .footer-link a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; grid-template-rows: 300px 1fr; }
+      .panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      #globe { height: calc(100vh - 300px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="panel">
+      <h1>Quantum Startups Globe</h1>
+      <p>Interactive map of 55 startups with region/specialty filters.</p>
+
+      <div class="control">
+        <label for="regionFilter">Region</label>
+        <select id="regionFilter">
+          <option value="all">All Regions</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="specialtyFilter">Specialty</label>
+        <select id="specialtyFilter">
+          <option value="all">All Specialties</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="searchInput">Search Startup</label>
+        <input id="searchInput" type="text" placeholder="Type company name" />
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="legend">
+        <div><span class="dot" style="background:#00c2a8"></span>Hardware</div>
+        <div><span class="dot" style="background:#52a7ff"></span>Software</div>
+        <div><span class="dot" style="background:#f9a826"></span>Cryptography</div>
+        <div><span class="dot" style="background:#ef5da8"></span>Sensing</div>
+        <div><span class="dot" style="background:#c5e55a"></span>Materials / Other</div>
+      </div>
+
+      <div class="footer-link"><a href="index.html">Back to report index</a></div>
+    </aside>
+    <div id="globe"></div>
+  </div>
+
+  <script>
+    const STARTUPS = [
+      {name:"IonQ",country:"United States",city:"College Park",region:"North America",specialty:["hardware","software"],website:"https://ionq.com",lat:38.9807,lng:-76.9369,short_profile:"Trapped-ion quantum computing company."},
+      {name:"Rigetti Computing",country:"United States",city:"Berkeley",region:"North America",specialty:["hardware","software"],website:"https://www.rigetti.com",lat:37.8715,lng:-122.273,short_profile:"Superconducting full-stack quantum computing."},
+      {name:"PsiQuantum",country:"United States",city:"Palo Alto",region:"North America",specialty:["hardware"],website:"https://www.psiquantum.com",lat:37.4419,lng:-122.143,short_profile:"Photonic fault-tolerant quantum hardware."},
+      {name:"QuEra Computing",country:"United States",city:"Boston",region:"North America",specialty:["hardware","software"],website:"https://www.quera.com",lat:42.3601,lng:-71.0589,short_profile:"Neutral-atom quantum computing systems."},
+      {name:"Atom Computing",country:"United States",city:"Boulder",region:"North America",specialty:["hardware"],website:"https://atom-computing.com",lat:40.01499,lng:-105.2705,short_profile:"Neutral-atom quantum processors."},
+      {name:"Infleqtion",country:"United States",city:"Boulder",region:"North America",specialty:["hardware","sensing"],website:"https://infleqtion.com",lat:40.015,lng:-105.27,short_profile:"Quantum computing, sensing, and timing."},
+      {name:"SEEQC",country:"United States",city:"Elmsford",region:"North America",specialty:["hardware"],website:"https://seeqc.com",lat:41.0551,lng:-73.8204,short_profile:"Digital quantum computing platform."},
+      {name:"EeroQ",country:"United States",city:"Chicago",region:"North America",specialty:["hardware","materials"],website:"https://www.eeroq.com",lat:41.8781,lng:-87.6298,short_profile:"Electrons-on-helium qubit architecture."},
+      {name:"SandboxAQ",country:"United States",city:"Palo Alto",region:"North America",specialty:["software","cryptography","materials"],website:"https://www.sandboxaq.com",lat:37.4419,lng:-122.143,short_profile:"Quantum and quantitative AI software."},
+      {name:"D-Wave Quantum",country:"Canada",city:"Burnaby",region:"North America",specialty:["hardware","software"],website:"https://www.dwavequantum.com",lat:49.2488,lng:-122.9805,short_profile:"Quantum annealing and hybrid optimization."},
+      {name:"Xanadu",country:"Canada",city:"Toronto",region:"North America",specialty:["hardware","software"],website:"https://www.xanadu.ai",lat:43.6532,lng:-79.3832,short_profile:"Photonic quantum computing and software."},
+      {name:"Photonic",country:"Canada",city:"Vancouver",region:"North America",specialty:["hardware"],website:"https://photonic.com",lat:49.2827,lng:-123.1207,short_profile:"Distributed photonic quantum architecture."},
+      {name:"Anyon Systems",country:"Canada",city:"Montreal",region:"North America",specialty:["hardware"],website:"https://anyon.systems",lat:45.5017,lng:-73.5673,short_profile:"Superconducting gate-based quantum hardware."},
+      {name:"Nord Quantique",country:"Canada",city:"Sherbrooke",region:"North America",specialty:["hardware"],website:"https://nordquantique.ca",lat:45.4042,lng:-71.8929,short_profile:"Fault-tolerant superconducting architecture."},
+
+      {name:"Quantinuum",country:"United Kingdom",city:"Cambridge",region:"Europe",specialty:["hardware","software","cryptography"],website:"https://www.quantinuum.com",lat:52.2053,lng:0.1218,short_profile:"Full-stack trapped-ion systems and software."},
+      {name:"Riverlane",country:"United Kingdom",city:"Cambridge",region:"Europe",specialty:["software","hardware"],website:"https://riverlane.com",lat:52.2053,lng:0.1218,short_profile:"Quantum error correction stack."},
+      {name:"Oxford Quantum Circuits",country:"United Kingdom",city:"Reading",region:"Europe",specialty:["hardware"],website:"https://oxfordquantumcircuits.com",lat:51.4543,lng:-0.9781,short_profile:"Superconducting quantum systems."},
+      {name:"Quantum Motion",country:"United Kingdom",city:"London",region:"Europe",specialty:["hardware"],website:"https://quantummotion.tech",lat:51.5072,lng:-0.1276,short_profile:"Silicon spin qubit processors."},
+      {name:"ORCA Computing",country:"United Kingdom",city:"London",region:"Europe",specialty:["hardware"],website:"https://orcacomputing.com",lat:51.5072,lng:-0.1276,short_profile:"Photonic quantum systems."},
+      {name:"Universal Quantum",country:"United Kingdom",city:"Brighton",region:"Europe",specialty:["hardware"],website:"https://universalquantum.com",lat:50.8225,lng:-0.1372,short_profile:"Modular trapped-ion architecture."},
+      {name:"Phasecraft",country:"United Kingdom",city:"Bristol",region:"Europe",specialty:["software","materials"],website:"https://www.phasecraft.io",lat:51.4545,lng:-2.5879,short_profile:"Quantum algorithms for chemistry and materials."},
+      {name:"Nu Quantum",country:"United Kingdom",city:"Cambridge",region:"Europe",specialty:["hardware"],website:"https://nu-quantum.com",lat:52.2053,lng:0.1218,short_profile:"Networking and interconnect layer for scale-out."},
+      {name:"Alice & Bob",country:"France",city:"Paris",region:"Europe",specialty:["hardware"],website:"https://alice-bob.com",lat:48.8566,lng:2.3522,short_profile:"Cat-qubit fault-tolerant quantum computing."},
+      {name:"Pasqal",country:"France",city:"Paris",region:"Europe",specialty:["hardware","software"],website:"https://www.pasqal.com",lat:48.8566,lng:2.3522,short_profile:"Neutral-atom quantum platform."},
+      {name:"Quandela",country:"France",city:"Massy",region:"Europe",specialty:["hardware","software"],website:"https://www.quandela.com",lat:48.7262,lng:2.2732,short_profile:"Photonic computing and cloud access."},
+      {name:"C12 Quantum Electronics",country:"France",city:"Paris",region:"Europe",specialty:["hardware","materials"],website:"https://c12qe.com",lat:48.8566,lng:2.3522,short_profile:"Carbon nanotube qubit hardware."},
+      {name:"Quobly",country:"France",city:"Grenoble",region:"Europe",specialty:["hardware"],website:"https://quobly.io",lat:45.1885,lng:5.7245,short_profile:"CMOS-compatible silicon quantum processors."},
+      {name:"Multiverse Computing",country:"Spain",city:"San Sebastian",region:"Europe",specialty:["software"],website:"https://multiversecomputing.com",lat:43.3183,lng:-1.9812,short_profile:"Quantum AI and model compression."},
+      {name:"Qilimanjaro Quantum Tech",country:"Spain",city:"Barcelona",region:"Europe",specialty:["hardware","software"],website:"https://qilimanjaro.tech",lat:41.3851,lng:2.1734,short_profile:"Analog and gate-based quantum systems."},
+      {name:"IQM Quantum Computers",country:"Finland",city:"Espoo",region:"Europe",specialty:["hardware","software"],website:"https://www.meetiqm.com",lat:60.2055,lng:24.6559,short_profile:"Superconducting full-stack quantum systems."},
+      {name:"QuantWare",country:"Netherlands",city:"Delft",region:"Europe",specialty:["hardware"],website:"https://www.quantware.com",lat:52.0116,lng:4.3571,short_profile:"Scalable superconducting QPUs."},
+      {name:"Qblox",country:"Netherlands",city:"Delft",region:"Europe",specialty:["hardware"],website:"https://qblox.com",lat:52.0116,lng:4.3571,short_profile:"Quantum control electronics."},
+      {name:"planqc",country:"Germany",city:"Munich",region:"Europe",specialty:["hardware"],website:"https://planqc.eu",lat:48.1351,lng:11.582,short_profile:"Neutral-atom gate-based quantum startup."},
+      {name:"ParityQC",country:"Austria",city:"Innsbruck",region:"Europe",specialty:["software","hardware"],website:"https://parityqc.com",lat:47.2692,lng:11.4041,short_profile:"Quantum architecture and compiler co-design."},
+      {name:"Terra Quantum",country:"Switzerland",city:"St. Gallen",region:"Europe",specialty:["software","cryptography"],website:"https://terraquantum.swiss",lat:47.4245,lng:9.3767,short_profile:"Quantum software and security products."},
+      {name:"Alpine Quantum Technologies",country:"Austria",city:"Innsbruck",region:"Europe",specialty:["hardware"],website:"https://www.aqt.eu",lat:47.2692,lng:11.4041,short_profile:"Trapped-ion hardware from Innsbruck cluster."},
+
+      {name:"Classiq",country:"Israel",city:"Tel Aviv",region:"Middle East",specialty:["software"],website:"https://www.classiq.io",lat:32.0853,lng:34.7818,short_profile:"Enterprise quantum software design platform."},
+      {name:"Quantum Machines",country:"Israel",city:"Tel Aviv",region:"Middle East",specialty:["hardware","software"],website:"https://www.quantum-machines.co",lat:32.0853,lng:34.7818,short_profile:"Hybrid quantum-classical control systems."},
+      {name:"Quantum Source",country:"Israel",city:"Tel Aviv",region:"Middle East",specialty:["hardware"],website:"https://www.quantumsource.com",lat:32.0853,lng:34.7818,short_profile:"Photonic quantum building blocks."},
+      {name:"LightSolver",country:"Israel",city:"Tel Aviv",region:"Middle East",specialty:["hardware","software"],website:"https://lightsolver.com",lat:32.0853,lng:34.7818,short_profile:"Laser-based optimization acceleration."},
+      {name:"Qedma",country:"Israel",city:"Tel Aviv",region:"Middle East",specialty:["software"],website:"https://www.qedma.com",lat:32.0853,lng:34.7818,short_profile:"Quantum error mitigation software."},
+      {name:"Quantasphere",country:"Saudi Arabia",city:"Riyadh",region:"Middle East",specialty:["cryptography"],website:"https://www.quantasphere.tech",lat:24.7136,lng:46.6753,short_profile:"Quantum-secure data exchange technologies."},
+
+      {name:"QpiAI",country:"India",city:"Bengaluru",region:"Asia-Pacific",specialty:["hardware","software"],website:"https://qpiai.tech",lat:12.9716,lng:77.5946,short_profile:"Full-stack quantum and AI systems."},
+      {name:"QNu Labs",country:"India",city:"Bengaluru",region:"Asia-Pacific",specialty:["cryptography"],website:"https://www.qnulabs.com",lat:12.9716,lng:77.5946,short_profile:"Quantum-safe communication and QKD."},
+      {name:"QunaSys",country:"Japan",city:"Tokyo",region:"Asia-Pacific",specialty:["software","materials"],website:"https://qunasys.com",lat:35.6762,lng:139.6503,short_profile:"Quantum chemistry and materials algorithms."},
+      {name:"SpeQtral",country:"Singapore",city:"Singapore",region:"Asia-Pacific",specialty:["cryptography","hardware"],website:"https://speqtralquantum.com",lat:1.3521,lng:103.8198,short_profile:"Satellite and space-based quantum communication."},
+      {name:"Origin Quantum",country:"China",city:"Hefei",region:"Asia-Pacific",specialty:["hardware","software"],website:"https://originqc.com.cn",lat:31.8206,lng:117.2272,short_profile:"Superconducting full-stack quantum platform."},
+      {name:"Horizon Quantum",country:"Singapore",city:"Singapore",region:"Asia-Pacific",specialty:["software"],website:"https://www.horizonquantum.com",lat:1.3521,lng:103.8198,short_profile:"Quantum software and toolchain startup."},
+
+      {name:"Q-CTRL",country:"Australia",city:"Sydney",region:"Oceania",specialty:["software","sensing"],website:"https://q-ctrl.com",lat:-33.8688,lng:151.2093,short_profile:"Quantum control infrastructure software."},
+      {name:"Quantum Brilliance",country:"Australia",city:"Canberra",region:"Oceania",specialty:["hardware"],website:"https://quantumbrilliance.com",lat:-35.2809,lng:149.13,short_profile:"Room-temperature diamond quantum accelerators."},
+      {name:"Diraq",country:"Australia",city:"Sydney",region:"Oceania",specialty:["hardware"],website:"https://diraq.com",lat:-33.8688,lng:151.2093,short_profile:"Silicon spin qubit startup."},
+      {name:"Silicon Quantum Computing",country:"Australia",city:"Sydney",region:"Oceania",specialty:["hardware","materials"],website:"https://sqc.com.au",lat:-33.8688,lng:151.2093,short_profile:"Atomic-precision silicon quantum processors."},
+      {name:"QuintessenceLabs",country:"Australia",city:"Canberra",region:"Oceania",specialty:["cryptography"],website:"https://www.quintessencelabs.com",lat:-35.2809,lng:149.13,short_profile:"Quantum-enhanced cybersecurity and key management."},
+      {name:"Nomad Atomics",country:"Australia",city:"Melbourne",region:"Oceania",specialty:["sensing"],website:"https://www.nomadatomics.com",lat:-37.8136,lng:144.9631,short_profile:"Quantum gravimetry for subsurface monitoring."},
+
+      {name:"Qnity",country:"Brazil",city:"Sao Paulo",region:"Latin America",specialty:["sensing","materials"],website:"https://qnity.com",lat:-23.5505,lng:-46.6333,short_profile:"Quantum-enabled biosensing applications."}
+    ];
+
+    const colorBySpecialty = {
+      hardware: '#00c2a8',
+      software: '#52a7ff',
+      cryptography: '#f9a826',
+      sensing: '#ef5da8',
+      materials: '#c5e55a'
+    };
+
+    const regionFilter = document.getElementById('regionFilter');
+    const specialtyFilter = document.getElementById('specialtyFilter');
+    const searchInput = document.getElementById('searchInput');
+    const stats = document.getElementById('stats');
+
+    const regions = [...new Set(STARTUPS.map(s => s.region))].sort();
+    const specialties = [...new Set(STARTUPS.flatMap(s => s.specialty))].sort();
+
+    regions.forEach(r => {
+      const o = document.createElement('option');
+      o.value = r;
+      o.textContent = r;
+      regionFilter.appendChild(o);
+    });
+
+    specialties.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s;
+      o.textContent = s[0].toUpperCase() + s.slice(1);
+      specialtyFilter.appendChild(o);
+    });
+
+    const world = Globe()(document.getElementById('globe'))
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+      .pointAltitude(0.015)
+      .pointRadius(0.29282)
+      .pointLabel(d => `
+        <div class="tooltip">
+          <b>${d.name}</b><br/>
+          ${d.city}, ${d.country}<br/>
+          Region: ${d.region}<br/>
+          Specialty: ${d.specialty.join(', ')}<br/>
+          ${d.short_profile}<br/>
+          <a href="${d.website}" target="_blank" rel="noopener">Website</a>
+        </div>`)
+      .onPointClick(d => window.open(d.website, '_blank', 'noopener'))
+      .onPointHover(point => {
+        world.controls().autoRotate = !point;
+      });
+
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = 0.3;
+
+    function colorFor(startup) {
+      if (startup.specialty.includes('hardware')) return colorBySpecialty.hardware;
+      if (startup.specialty.includes('software')) return colorBySpecialty.software;
+      if (startup.specialty.includes('cryptography')) return colorBySpecialty.cryptography;
+      if (startup.specialty.includes('sensing')) return colorBySpecialty.sensing;
+      return colorBySpecialty.materials;
+    }
+
+    function applyFilters() {
+      const region = regionFilter.value;
+      const specialty = specialtyFilter.value;
+      const query = searchInput.value.trim().toLowerCase();
+
+      const filtered = STARTUPS.filter(s => {
+        const regionOk = region === 'all' || s.region === region;
+        const specialtyOk = specialty === 'all' || s.specialty.includes(specialty);
+        const searchOk = !query || s.name.toLowerCase().includes(query);
+        return regionOk && specialtyOk && searchOk;
+      }).map(s => ({ ...s, color: colorFor(s) }));
+
+      world.pointsData(filtered).pointColor('color');
+
+      const byRegion = filtered.reduce((acc, s) => {
+        acc[s.region] = (acc[s.region] || 0) + 1;
+        return acc;
+      }, {});
+
+      stats.innerHTML = `
+        <b>Total displayed:</b> ${filtered.length} / ${STARTUPS.length}<br/>
+        <b>Regions shown:</b> ${Object.keys(byRegion).length}<br/>
+        <b>Breakdown:</b> ${Object.entries(byRegion).map(([k,v]) => `${k} (${v})`).join(', ') || 'None'}
+      `;
+    }
+
+    regionFilter.addEventListener('change', applyFilters);
+    specialtyFilter.addEventListener('change', applyFilters);
+    searchInput.addEventListener('input', applyFilters);
+    window.addEventListener('resize', () => {
+      world.width(document.getElementById('globe').clientWidth);
+      world.height(document.getElementById('globe').clientHeight);
+    });
+
+    applyFilters();
+  </script>
+</body>
+</html>
+
+
+
+
