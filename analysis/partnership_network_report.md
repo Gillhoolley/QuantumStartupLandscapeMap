@@ -10,28 +10,29 @@ Total startups: **100**
 - Unique partner entities: **21**
 
 ## Top Partner Entities
-| partner | linked_startups |
-|---|---|
-| AWS Braket | 5 |
-| NVIDIA | 5 |
-| Azure Quantum | 4 |
-| Cloud Providers | 3 |
-| Enterprise Pilots | 3 |
-| Defense Programs | 2 |
-| European Research Labs | 2 |
-| Google Cloud | 2 |
-| Hardware OEMs | 2 |
-| IBM Quantum | 2 |
-| University Labs | 2 |
-| Enterprise Security Partners | 1 |
-| Government Labs | 1 |
-| Government Programs | 1 |
-| IBM Quantum Network | 1 |
-| OVHcloud | 1 |
-| PennyLane Ecosystem | 1 |
-| Pharma Partners | 1 |
-| Satellite Operators | 1 |
-| Superconducting Hardware OEMs | 1 |
+| partner | linked_startups | startup_names |
+|---|---|---|
+| AWS Braket | 5 | Classiq, D-Wave Quantum, IonQ, Q-CTRL, Rigetti Computing |
+| NVIDIA | 5 | Alice & Bob, IonQ, Quantinuum, Quantum Machines, Xanadu |
+| Azure Quantum | 4 | Classiq, IonQ, Quantinuum, Rigetti Computing |
+| Cloud Providers | 3 | ORCA Computing, QunaSys, Xanadu |
+| Enterprise Pilots | 3 | ORCA Computing, Pasqal, Quantinuum |
+| Defense Programs | 2 | Q-CTRL, QNu Labs |
+| European Research Labs | 2 | Alice & Bob, Quandela |
+| Google Cloud | 2 | D-Wave Quantum, SandboxAQ |
+| Hardware OEMs | 2 | Nu Quantum, Riverlane |
+| IBM Quantum | 2 | Classiq, Q-CTRL |
+| University Labs | 2 | Nu Quantum, Riverlane |
+| Enterprise Security Partners | 1 | SandboxAQ |
+| Government Labs | 1 | D-Wave Quantum |
+| Government Programs | 1 | SpeQtral |
+| IBM Quantum Network | 1 | Pasqal |
+| OVHcloud | 1 | Quandela |
+| PennyLane Ecosystem | 1 | Xanadu |
+| Pharma Partners | 1 | QunaSys |
+| Satellite Operators | 1 | SpeQtral |
+| Superconducting Hardware OEMs | 1 | Quantum Machines |
+| Telecom Operators | 1 | QNu Labs |
 
 ## Most-Connected Startups
 | startup | partner_count |

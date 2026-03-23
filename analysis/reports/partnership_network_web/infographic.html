@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Partnership Network Web</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f5f9ff;color:#0f172a}
+.wrap{max-width:1200px;margin:0 auto;padding:20px}
+h1{margin:0;font-size:30px}
+.sub{color:#475569;margin:6px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{background:#fff;border:1px solid #dbe7ff;border-radius:12px;padding:12px}
+.k{font-size:12px;color:#64748b;text-transform:uppercase}.v{font-size:30px;font-weight:700}
+.card{margin-top:12px;background:#fff;border:1px solid #dbe7ff;border-radius:12px;padding:12px}
+#net{width:100%;height:680px;border:1px solid #dbe7ff;border-radius:12px;background:linear-gradient(180deg,#f8fbff,#f1f7ff)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0;color:#475569;font-size:12px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.tip{position:fixed;pointer-events:none;background:#0f172a;color:#fff;padding:6px 8px;border-radius:6px;font-size:12px;opacity:0;transform:translate(10px,10px);max-width:280px;z-index:10}
+.small{font-size:12px;color:#475569}.table{width:100%;border-collapse:collapse;margin-top:8px}
+.table th,.table td{font-size:12px;text-align:left;padding:8px;border-bottom:1px solid #e2e8f0}
+.table th{background:#f8fbff;color:#475569}
+@media (max-width:900px){.grid{grid-template-columns:1fr 1fr}#net{height:560px}}
+</style>
+</head>
+<body>
+<div class='wrap'>
+  <h1>Partnership Network Web</h1>
+  <div class='sub'>Interactive node-link map of startups and partner entities (drag nodes to explore)</div>
+  <div class='grid'>
+    <div class='kpi'><div class='k'>Partner Nodes</div><div class='v'>21</div></div>
+    <div class='kpi'><div class='k'>Startup Nodes</div><div class='v'>18</div></div>
+    <div class='kpi'><div class='k'>Total Edges</div><div class='v'>42</div></div>
+    <div class='kpi'><div class='k'>Top Partner Degree</div><div class='v'>5</div></div>
+  </div>
+  <div class='card'>
+    <div class='legend'>
+      <div><span class='dot' style='background:#0ea5e9'></span>Partner node</div>
+      <div><span class='dot' style='background:#8b5cf6'></span>Startup node</div>
+      <div>Node size = number of links</div>
+    </div>
+    <svg id='net' viewBox='0 0 1100 680' preserveAspectRatio='xMidYMid meet'></svg>
+    <div class='small'>Tip: hover nodes for details. Drag nodes to inspect local neighborhoods.</div>
+  </div>
+  <div class='card'>
+    <h3>Top Partner Nodes</h3>
+    <table class='table'>
+      <thead><tr><th>Partner</th><th>Linked Startups</th></tr></thead>
+      <tbody>
+      <tr><td>AWS Braket</td><td>5</td></tr><tr><td>NVIDIA</td><td>5</td></tr><tr><td>Azure Quantum</td><td>4</td></tr><tr><td>Cloud Providers</td><td>3</td></tr><tr><td>Enterprise Pilots</td><td>3</td></tr><tr><td>Defense Programs</td><td>2</td></tr><tr><td>European Research Labs</td><td>2</td></tr><tr><td>Google Cloud</td><td>2</td></tr><tr><td>Hardware OEMs</td><td>2</td></tr><tr><td>IBM Quantum</td><td>2</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class='tip' id='tip'></div>
+<script>
+const data = {"nodes":[{"id":"p:AWS Braket","label":"AWS Braket","type":"partner","degree":5,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Azure Quantum","label":"Azure Quantum","type":"partner","degree":4,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Cloud Providers","label":"Cloud Providers","type":"partner","degree":3,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Defense Programs","label":"Defense Programs","type":"partner","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Enterprise Pilots","label":"Enterprise Pilots","type":"partner","degree":3,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Enterprise Security Partners","label":"Enterprise Security Partners","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:European Research Labs","label":"European Research Labs","type":"partner","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Google Cloud","label":"Google Cloud","type":"partner","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Government Labs","label":"Government Labs","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Government Programs","label":"Government Programs","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Hardware OEMs","label":"Hardware OEMs","type":"partner","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:IBM Quantum","label":"IBM Quantum","type":"partner","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:IBM Quantum Network","label":"IBM Quantum Network","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:NVIDIA","label":"NVIDIA","type":"partner","degree":5,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:OVHcloud","label":"OVHcloud","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:PennyLane Ecosystem","label":"PennyLane Ecosystem","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Pharma Partners","label":"Pharma Partners","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Satellite Operators","label":"Satellite Operators","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Superconducting Hardware OEMs","label":"Superconducting Hardware OEMs","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:Telecom Operators","label":"Telecom Operators","type":"partner","degree":1,"x":0,"y":0,"vx":0,"vy":0},{"id":"p:University Labs","label":"University Labs","type":"partner","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Alice & Bob","label":"Alice & Bob","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Classiq","label":"Classiq","type":"startup","degree":3,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:D-Wave Quantum","label":"D-Wave Quantum","type":"startup","degree":3,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:IonQ","label":"IonQ","type":"startup","degree":3,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Nu Quantum","label":"Nu Quantum","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:ORCA Computing","label":"ORCA Computing","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Pasqal","label":"Pasqal","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Q-CTRL","label":"Q-CTRL","type":"startup","degree":3,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:QNu Labs","label":"QNu Labs","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Quandela","label":"Quandela","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Quantinuum","label":"Quantinuum","type":"startup","degree":3,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Quantum Machines","label":"Quantum Machines","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:QunaSys","label":"QunaSys","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Rigetti Computing","label":"Rigetti Computing","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Riverlane","label":"Riverlane","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:SandboxAQ","label":"SandboxAQ","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:SpeQtral","label":"SpeQtral","type":"startup","degree":2,"x":0,"y":0,"vx":0,"vy":0},{"id":"s:Xanadu","label":"Xanadu","type":"startup","degree":3,"x":0,"y":0,"vx":0,"vy":0}],"links":[{"source":"s:Alice & Bob","target":"p:NVIDIA"},{"source":"s:Alice & Bob","target":"p:European Research Labs"},{"source":"s:Classiq","target":"p:AWS Braket"},{"source":"s:Classiq","target":"p:Azure Quantum"},{"source":"s:Classiq","target":"p:IBM Quantum"},{"source":"s:D-Wave Quantum","target":"p:AWS Braket"},{"source":"s:D-Wave Quantum","target":"p:Google Cloud"},{"source":"s:D-Wave Quantum","target":"p:Government Labs"},{"source":"s:IonQ","target":"p:AWS Braket"},{"source":"s:IonQ","target":"p:Azure Quantum"},{"source":"s:IonQ","target":"p:NVIDIA"},{"source":"s:Nu Quantum","target":"p:Hardware OEMs"},{"source":"s:Nu Quantum","target":"p:University Labs"},{"source":"s:ORCA Computing","target":"p:Enterprise Pilots"},{"source":"s:ORCA Computing","target":"p:Cloud Providers"},{"source":"s:Pasqal","target":"p:IBM Quantum Network"},{"source":"s:Pasqal","target":"p:Enterprise Pilots"},{"source":"s:Q-CTRL","target":"p:IBM Quantum"},{"source":"s:Q-CTRL","target":"p:AWS Braket"},{"source":"s:Q-CTRL","target":"p:Defense Programs"},{"source":"s:QNu Labs","target":"p:Telecom Operators"},{"source":"s:QNu Labs","target":"p:Defense Programs"},{"source":"s:Quandela","target":"p:OVHcloud"},{"source":"s:Quandela","target":"p:European Research Labs"},{"source":"s:Quantinuum","target":"p:Azure Quantum"},{"source":"s:Quantinuum","target":"p:NVIDIA"},{"source":"s:Quantinuum","target":"p:Enterprise Pilots"},{"source":"s:Quantum Machines","target":"p:NVIDIA"},{"source":"s:Quantum Machines","target":"p:Superconducting Hardware OEMs"},{"source":"s:QunaSys","target":"p:Pharma Partners"},{"source":"s:QunaSys","target":"p:Cloud Providers"},{"source":"s:Rigetti Computing","target":"p:AWS Braket"},{"source":"s:Rigetti Computing","target":"p:Azure Quantum"},{"source":"s:Riverlane","target":"p:Hardware OEMs"},{"source":"s:Riverlane","target":"p:University Labs"},{"source":"s:SandboxAQ","target":"p:Google Cloud"},{"source":"s:SandboxAQ","target":"p:Enterprise Security Partners"},{"source":"s:SpeQtral","target":"p:Satellite Operators"},{"source":"s:SpeQtral","target":"p:Government Programs"},{"source":"s:Xanadu","target":"p:NVIDIA"},{"source":"s:Xanadu","target":"p:PennyLane Ecosystem"},{"source":"s:Xanadu","target":"p:Cloud Providers"}]};
+const svg = document.getElementById('net');
+const tip = document.getElementById('tip');
+const W = 1100, H = 680;
+const nodeById = new Map(data.nodes.map(n => [n.id, n]));
+
+data.nodes.forEach((n, i) => {
+  const angle = (i / data.nodes.length) * Math.PI * 2;
+  const ring = n.type === 'partner' ? 180 : 280;
+  n.x = W / 2 + Math.cos(angle) * ring + (Math.random() - 0.5) * 20;
+  n.y = H / 2 + Math.sin(angle) * ring + (Math.random() - 0.5) * 20;
+  n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
+});
+
+const gLinks = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+const gNodes = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+svg.appendChild(gLinks); svg.appendChild(gNodes);
+
+const linkEls = data.links.map(l => {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  el.setAttribute('stroke', 'rgba(30, 64, 175, 0.18)');
+  el.setAttribute('stroke-width', '1.1');
+  gLinks.appendChild(el);
+  return { el, source: nodeById.get(l.source), target: nodeById.get(l.target) };
+});
+
+const nodeEls = data.nodes.map(n => {
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  const r = 4 + Math.min(14, n.degree * 1.6);
+  c.setAttribute('r', String(r));
+  c.setAttribute('fill', n.type === 'partner' ? '#0ea5e9' : '#8b5cf6');
+  c.setAttribute('fill-opacity', n.type === 'partner' ? '0.88' : '0.78');
+  c.setAttribute('stroke', '#fff');
+  c.setAttribute('stroke-width', '1');
+  c.style.cursor = 'grab';
+  t.textContent = n.label;
+  t.setAttribute('font-size', n.type === 'partner' ? '11' : '9');
+  t.setAttribute('fill', '#334155');
+  t.setAttribute('dy', '-8');
+  t.setAttribute('text-anchor', 'middle');
+  g.appendChild(c); g.appendChild(t); gNodes.appendChild(g);
+
+  const show = e => {
+    tip.innerHTML = '<b>' + n.label + '</b><br/>' + (n.type === 'partner' ? 'Partner' : 'Startup') + '<br/>Links: ' + n.degree;
+    tip.style.opacity = '1';
+    tip.style.left = (e.clientX + 12) + 'px';
+    tip.style.top = (e.clientY + 12) + 'px';
+  };
+  const move = e => { tip.style.left = (e.clientX + 12) + 'px'; tip.style.top = (e.clientY + 12) + 'px'; };
+  const hide = () => { tip.style.opacity = '0'; };
+  g.addEventListener('mouseenter', show);
+  g.addEventListener('mousemove', move);
+  g.addEventListener('mouseleave', hide);
+
+  let drag = false;
+  const toSvg = evt => {
+    const pt = svg.createSVGPoint();
+    pt.x = evt.clientX; pt.y = evt.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  };
+  c.addEventListener('mousedown', evt => { drag = true; c.style.cursor = 'grabbing'; const p = toSvg(evt); n.fx = p.x; n.fy = p.y; });
+  window.addEventListener('mousemove', evt => { if (!drag) return; const p = toSvg(evt); n.fx = p.x; n.fy = p.y; });
+  window.addEventListener('mouseup', () => { if (!drag) return; drag = false; c.style.cursor = 'grab'; n.fx = null; n.fy = null; });
+
+  return { g, n };
+});
+
+function tick() {
+  const centerX = W / 2, centerY = H / 2;
+  const repel = 1800;
+  const spring = 0.012;
+  const damping = 0.88;
+
+  for (let i = 0; i < data.nodes.length; i++) {
+    const a = data.nodes[i];
+    for (let j = i + 1; j < data.nodes.length; j++) {
+      const b = data.nodes[j];
+      let dx = a.x - b.x, dy = a.y - b.y;
+      let dist2 = dx*dx + dy*dy + 0.01;
+      const f = repel / dist2;
+      const inv = 1 / Math.sqrt(dist2);
+      dx *= inv; dy *= inv;
+      a.vx += dx * f; a.vy += dy * f;
+      b.vx -= dx * f; b.vy -= dy * f;
+    }
+  }
+
+  linkEls.forEach(l => {
+    const dx = l.target.x - l.source.x;
+    const dy = l.target.y - l.source.y;
+    const dist = Math.sqrt(dx*dx + dy*dy) + 0.01;
+    const desired = (l.source.type === l.target.type) ? 110 : 150;
+    const f = (dist - desired) * spring;
+    const ux = dx / dist, uy = dy / dist;
+    l.source.vx += ux * f; l.source.vy += uy * f;
+    l.target.vx -= ux * f; l.target.vy -= uy * f;
+  });
+
+  data.nodes.forEach(n => {
+    const pull = n.type === 'partner' ? 0.005 : 0.0035;
+    n.vx += (centerX - n.x) * pull;
+    n.vy += (centerY - n.y) * pull;
+
+    if (n.fx != null && n.fy != null) { n.x = n.fx; n.y = n.fy; n.vx = 0; n.vy = 0; }
+    else { n.vx *= damping; n.vy *= damping; n.x += n.vx; n.y += n.vy; }
+
+    n.x = Math.max(24, Math.min(W - 24, n.x));
+    n.y = Math.max(24, Math.min(H - 24, n.y));
+  });
+
+  linkEls.forEach(l => {
+    l.el.setAttribute('x1', l.source.x.toFixed(1));
+    l.el.setAttribute('y1', l.source.y.toFixed(1));
+    l.el.setAttribute('x2', l.target.x.toFixed(1));
+    l.el.setAttribute('y2', l.target.y.toFixed(1));
+  });
+
+  nodeEls.forEach(obj => {
+    obj.g.setAttribute('transform', 'translate(' + obj.n.x.toFixed(1) + ' ' + obj.n.y.toFixed(1) + ')');
+  });
+
+  requestAnimationFrame(tick);
+}
+tick();
+</script>
+</body>
+</html>

@@ -35,3 +35,6 @@ Each report folder contains:
 - hub_competitive_landscape_toronto_waterloo
 - hub_competitive_landscape_vancouver_burnaby
 - hub_competitive_landscape_canada
+- startup_partner_reverse
+
+- partnership_network_web
