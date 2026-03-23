@@ -118,7 +118,7 @@
       <div class="stats" id="stats"></div>
 
       <div class="legend">
-        <div><span class="dot" style="background:#00c2a8"></span>Hardware</div>
+      <div><span class="dot" style="background:#dfff00"></span>Hardware</div>
         <div><span class="dot" style="background:#52a7ff"></span>Software</div>
         <div><span class="dot" style="background:#f9a826"></span>Cryptography</div>
         <div><span class="dot" style="background:#ef5da8"></span>Sensing</div>
@@ -195,12 +195,14 @@
     ];
 
     const colorBySpecialty = {
-      hardware: '#00c2a8',
+      hardware: '#dfff00',
       software: '#52a7ff',
       cryptography: '#f9a826',
       sensing: '#ef5da8',
       materials: '#c5e55a'
     };
+    const COUNTRIES_GEOJSON_URL = 'https://unpkg.com/world-atlas@2/countries-110m.json';
+    const BORDER_COLOR = 'rgba(80, 255, 255, 0.85)';
 
     const regionFilter = document.getElementById('regionFilter');
     const specialtyFilter = document.getElementById('specialtyFilter');
@@ -228,7 +230,7 @@
       .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
       .pointAltitude(0.015)
-      .pointRadius(0.29282)
+      .pointRadius(0.366025)
       .pointLabel(d => `
         <div class="tooltip">
           <b>${d.name}</b><br/>
@@ -245,6 +247,21 @@
 
     world.controls().autoRotate = true;
     world.controls().autoRotateSpeed = 0.3;
+
+    async function loadCountryBorders() {
+      const topoJson = await import('https://cdn.jsdelivr.net/npm/topojson-client@3/+esm');
+      const res = await fetch(COUNTRIES_GEOJSON_URL);
+      const topology = await res.json();
+      const countries = topoJson.feature(topology, topology.objects.countries);
+
+      world
+        .polygonsData(countries.features)
+        .polygonCapColor(() => 'rgba(0, 0, 0, 0)')
+        .polygonSideColor(() => 'rgba(0, 0, 0, 0)')
+        .polygonStrokeColor(() => BORDER_COLOR)
+        .polygonAltitude(0.0012)
+        .polygonsTransitionDuration(0);
+    }
 
     function colorFor(startup) {
       if (startup.specialty.includes('hardware')) return colorBySpecialty.hardware;
@@ -288,6 +305,9 @@
       world.height(document.getElementById('globe').clientHeight);
     });
 
+    loadCountryBorders().catch(err => {
+      console.error('Failed to load country borders:', err);
+    });
     applyFilters();
   </script>
 </body>
