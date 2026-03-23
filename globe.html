@@ -60,6 +60,22 @@
       background: #0f2a3e;
       color: var(--text);
     }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .toggle-row label {
+      margin: 0;
+    }
+    .toggle-row input[type="checkbox"] {
+      width: auto;
+      transform: scale(1.1);
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
     .stats {
       margin-top: 14px;
       padding: 10px;
@@ -67,6 +83,99 @@
       border-radius: 8px;
       background: rgba(255,255,255,0.03);
       font-size: 13px;
+    }
+    .section-title {
+      margin: 14px 0 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .stats small {
+      color: var(--muted);
+    }
+    .metro-map {
+      width: 100%;
+      height: 220px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #0d2336 0%, #0a1b2b 100%);
+      overflow: hidden;
+      position: relative;
+    }
+    .metro-map svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .metro-empty {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      padding: 10px;
+    }
+    .metro-note {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .metro-actions {
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .metro-actions button {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: #11334b;
+      color: var(--text);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .metro-actions button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .metro-selection {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .inline-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .inline-actions button {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: #11334b;
+      color: var(--text);
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      flex: 1;
+    }
+    .network-svg {
+      width: 100%;
+      height: 170px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #0d2336 0%, #0a1b2b 100%);
+      margin-top: 6px;
+      display: block;
     }
     .legend {
       font-size: 12px;
@@ -94,7 +203,7 @@
   <div class="layout">
     <aside class="panel">
       <h1>Quantum Startups Globe</h1>
-      <p>Interactive map of 55 startups with region/specialty filters.</p>
+      <p>Interactive map of 100 startups with region/specialty filters.</p>
 
       <div class="control">
         <label for="regionFilter">Region</label>
@@ -115,7 +224,70 @@
         <input id="searchInput" type="text" placeholder="Type company name" />
       </div>
 
+      <div class="control">
+        <label for="lifecycleFilter">Lifecycle</label>
+        <select id="lifecycleFilter">
+          <option value="all">All Lifecycle Stages</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="maturityFilter">Go-To-Market Maturity</label>
+        <select id="maturityFilter">
+          <option value="all">All Maturity Stages</option>
+        </select>
+      </div>
+
+      <div class="section-title">Saved Views</div>
+      <div class="control">
+        <label for="viewNameInput">View Name</label>
+        <input id="viewNameInput" type="text" placeholder="e.g. Europe hardware focus" />
+      </div>
+      <div class="inline-actions">
+        <button id="saveViewBtn" type="button">Save View</button>
+        <button id="copyLinkBtn" type="button">Copy Share Link</button>
+      </div>
+      <div class="control">
+        <label for="savedViewsSelect">Load Saved View</label>
+        <select id="savedViewsSelect">
+          <option value="">Select a saved view</option>
+        </select>
+      </div>
+
+      <div class="toggle-row">
+        <label for="drillDownToggle">Regional Drill-Down Mode</label>
+        <input id="drillDownToggle" type="checkbox" checked />
+      </div>
+
       <div class="stats" id="stats"></div>
+      <div class="section-title">Regional Drill-Down</div>
+      <div class="stats" id="drilldownStats"></div>
+
+      <div class="section-title">Country Comparison</div>
+      <div class="comparison-grid">
+        <select id="compareCountryA"></select>
+        <select id="compareCountryB"></select>
+      </div>
+      <div class="stats" id="comparisonCard"></div>
+
+      <div class="section-title">2D Metro Drill-Down</div>
+      <div class="control">
+        <label for="metroHubSelect">Dense Hub</label>
+        <select id="metroHubSelect"></select>
+      </div>
+      <div class="metro-map" id="metroMap"></div>
+      <div class="metro-note" id="metroNote"></div>
+      <div class="metro-actions">
+        <button id="clearMetroSelection" type="button" disabled>Clear Cluster Filter</button>
+        <div class="metro-selection" id="metroSelectionState"></div>
+      </div>
+
+      <div class="section-title">Partnership Network</div>
+      <div class="stats" id="partnershipCard"></div>
+      <svg class="network-svg" id="partnershipGraph" viewBox="0 0 280 170" role="img" aria-label="Partnership network graph"></svg>
+
+      <div class="section-title">Data Quality</div>
+      <div class="stats" id="qualityCard"></div>
 
       <div class="legend">
       <div><span class="dot" style="background:#dfff00"></span>Hardware</div>
@@ -191,7 +363,53 @@
       {name:"QuintessenceLabs",country:"Australia",city:"Canberra",region:"Oceania",specialty:["cryptography"],website:"https://www.quintessencelabs.com",lat:-35.2809,lng:149.13,short_profile:"Quantum-enhanced cybersecurity and key management."},
       {name:"Nomad Atomics",country:"Australia",city:"Melbourne",region:"Oceania",specialty:["sensing"],website:"https://www.nomadatomics.com",lat:-37.8136,lng:144.9631,short_profile:"Quantum gravimetry for subsurface monitoring."},
 
-      {name:"Qnity",country:"Brazil",city:"Sao Paulo",region:"Latin America",specialty:["sensing","materials"],website:"https://qnity.com",lat:-23.5505,lng:-46.6333,short_profile:"Quantum-enabled biosensing applications."}
+      {name:"Qnity",country:"Brazil",city:"Sao Paulo",region:"Latin America",specialty:["sensing","materials"],website:"https://qnity.com",lat:-23.5505,lng:-46.6333,short_profile:"Quantum-enabled biosensing applications."},
+
+      {name:"IQM",country:"Finland",city:"Espoo",region:"Europe",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/IQM-WGR9GV",lat:60.2050,lng:24.6560,funding:"$578.4m",short_profile:"IQM is a full-stack superconducting quantum computers manufacturer founded in 2018 by Jan Goetz, Juha Vartiainen, Kuan Yen Tan and Mikko Möttönen."},
+      {name:"InfiniQuant",country:"Germany",city:"Vogtei",region:"Europe",specialty:["software"],website:"https://www.seedtable.com/startups/InfiniQuant-39PNYMD",lat:51.1638,lng:10.4478,funding:"$249.3m",short_profile:"InfiniQuant is a research team hosted in Christoph Marquardt’s Quantum Information Processing group at the Max Planck Institute for Science and Light."},
+      {name:"Ostendo Technologies",country:"United States",city:"Carlsbad",region:"North America",specialty:["software"],website:"https://www.seedtable.com/startups/Ostendo_Technologies-NMMWRB6",lat:33.1581,lng:-117.3506,funding:"$198.7m",short_profile:"Ostendo Technologies is a Carlsbad, California-based company founded in 2005 by Armagan Ergun."},
+      {name:"D-Wave Systems",country:"Canada",city:"Burnaby",region:"North America",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/D-Wave_Systems-3ARP5V",lat:49.2434,lng:-122.9725,funding:"$185.7m",short_profile:"D-Wave Systems is a Canadian company that designs and manufactures quantum computing and superconducting electronics, and AI software."},
+      {name:"Zapata Computing",country:"United States",city:"Boston",region:"North America",specialty:["software"],website:"https://www.seedtable.com/startups/Zapata_Computing-BWKEA8Y",lat:42.3588,lng:-71.0578,funding:"$107.6m",short_profile:"Zapata Computing is a company developing quantum software and algorithms for business founded in 2017 by Christopher Savoie, Alán Aspuru-Guzik, Jhonathan Romero Fontalvo, Jonathan Olson, Peter Johnson and Yudong Cao."},
+      {name:"Cambridge Quantum Computing",country:"United Kingdom",city:"Cambridge",region:"Europe",specialty:["software"],website:"https://www.seedtable.com/startups/Cambridge_Quantum_Computing-MN4Z3MZ",lat:52.2055,lng:0.1187,funding:"$72.8m",short_profile:"Cambridge Quantum Computing (CQC) was a quantum computing company with expertise in Quantum Information Processing, Artificial Intelligence, Optimization, and Pattern Recognition. In December 2021, the company merged with Honeywell Quantum Solutions (HQS) to form Quantinuum."},
+      {name:"PhaseCraft",country:"United Kingdom",city:"City of Westminster",region:"Europe",specialty:["software","materials"],website:"https://www.seedtable.com/startups/PhaseCraft-NMNWBEY",lat:51.5074,lng:-0.1278,funding:"$66.7m",short_profile:"PhaseCraft is a quantum algorithms developer founded in 2018 by Ashley Montanaro, John Morton and Toby Cubitt."},
+      {name:"Optalysys",country:"United Kingdom",city:"Leeds",region:"Europe",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/Optalysys-EAVY98R",lat:53.7974,lng:-1.5438,funding:"$63.7m",short_profile:"Developer of photonic computing solutions to support next-generation cloud infrastructure"},
+      {name:"QC Ware Corp.",country:"United States",city:"Kansas",region:"North America",specialty:["software"],website:"https://www.seedtable.com/startups/QC_Ware_Corp.-AMB5XK4",lat:39.7837,lng:-100.4459,funding:"$62.7m",short_profile:"QC Ware Corp. is a company that offers quantum computing software solutions for enterprises."},
+      {name:"ColdQuanta Inc",country:"United States",city:"Kansas",region:"North America",specialty:["sensing","hardware"],website:"https://www.seedtable.com/startups/ColdQuanta_Inc-39V8DGA",lat:39.7837,lng:-100.4459,funding:"$62.1m",short_profile:"Company developing and designing components and systems for scientific and industrial quantum applications."},
+      {name:"Equal1",country:"Ireland",city:"Dublin",region:"Europe",specialty:["hardware"],website:"https://www.seedtable.com/startups/Equal1-ZX5XEVG",lat:53.3494,lng:-6.2606,funding:"$60.0m",short_profile:"Equal1 is a quantum processors manufacturer founded in 2017 by Dirk Leipold, Mike Asker and Robert Staszewski ."},
+      {name:"SeeQC",country:"Italy",city:"Roma",region:"Europe",specialty:["sensing","software"],website:"https://www.seedtable.com/startups/SeeQC-YXVP5GG",lat:41.8933,lng:12.4829,funding:"$56.4m",short_profile:"SeeQC is a company developing and commercializing quantum technologies founded in 2019."},
+      {name:"Sense Photonics",country:"United States",city:"San Francisco",region:"North America",specialty:["sensing","hardware","materials"],website:"https://www.seedtable.com/startups/Sense_Photonics-4NA95MW",lat:37.7879,lng:-122.4075,funding:"$48.3m",short_profile:"Sense Photonics is a company building LiDAR and 3D sensor solutions for autonomous vehicles, industrial robotics, material handling, activity monitoring, and other applications."},
+      {name:"Quantum Xchange",country:"United States",city:"Kansas",region:"North America",specialty:["cryptography"],website:"https://www.seedtable.com/startups/Quantum_Xchange-ZXEVXPK",lat:39.7837,lng:-100.4459,funding:"$37.0m",short_profile:"Quantum Xchange is a quantum fiber network that is based in the United States. It uses photons of light to physically transfer a shared secret between two entities."},
+      {name:"1QBit",country:"Canada",city:"Vancouver",region:"North America",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/1QBit-EJRG3P",lat:49.2609,lng:-123.1140,funding:"$34.2m",short_profile:"A quantum computing software company that partners with industry and academia to build computer applications that can improve with advances in both quantum and classical computing. The company’s mission is to apply computation breakthroughs to machine intelligence and optimization science using their hardware-agnostic software platform."},
+      {name:"Sparrow Quantum",country:"Denmark",city:"København",region:"Europe",specialty:["hardware"],website:"https://www.seedtable.com/startups/Sparrow_Quantum-EA5NGDY",lat:55.6867,lng:12.5701,funding:"$29.0m",short_profile:"Sparrow Quantum is a manufacturer of photonic quantum chips founded in 2015 by Kurt Stokbro."},
+      {name:"QuSecure",country:"United States",city:"Menlo Park",region:"North America",specialty:["cryptography","software"],website:"https://www.seedtable.com/startups/QuSecure-R9NMXWW",lat:37.4520,lng:-122.1780,funding:"$28.7m",short_profile:"QuSecure is a Menlo Park, California-based cybersecurity company that is developing quantum security applications, it was founded in 2019 by Skip Sanzeri, Rebecca Krauthamer, Dave Krauthamer, and Kosta Vilk."},
+      {name:"Pqshield Ltd",country:"United Kingdom",city:"Oxford",region:"Europe",specialty:["cryptography"],website:"https://www.seedtable.com/startups/Pqshield_Ltd-395MV3D",lat:51.7520,lng:-1.2578,funding:"$27.6m",short_profile:"Pqshield Limited is an Oxford-based cryptography company using their cryptographic knowledge to develop cybersecurity solutions."},
+      {name:"ISARA (company)",country:"Canada",city:"Northwest Territories",region:"North America",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/ISARA_%28company%29-5KZ94Z5",lat:61.0667,lng:-107.9917,funding:"$26.8m",short_profile:"ISARA is a company developing quantum computer resistant software products founded in 2015 by Scott Totzke."},
+      {name:"UbiQD",country:"United States",city:"Los Alamos",region:"North America",specialty:["hardware"],website:"https://www.seedtable.com/startups/UbiQD-VWR93AN",lat:35.8814,lng:-106.2990,funding:"$20.6m",short_profile:"UbiQD is a New Mexico-based company developing and manufacturing semiconductor nanocrystals or quantum dots for research applications."},
+      {name:"Quantum Circuits",country:"United States",city:"New Haven, Connecticut",region:"North America",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/Quantum_Circuits-NMNKWEG",lat:41.3083,lng:-72.9279,funding:"$18.0m",short_profile:"Quantum Circuits Company is a company that is aiming to develop, manufacture, and sell the first practical and useful quantum computer using superconducting qubits. It is based in New Haven, Connecticut and founded in 2015 by Robert J. Schoelkopf, Michel Devoret, Luigi Frunzio and Brian W. Pusch."},
+      {name:"Aliro Quantum",country:"United States",city:"Boston",region:"North America",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/Aliro_Quantum-YXZXXBW",lat:42.3554,lng:-71.0605,funding:"$17.7m",short_profile:"Aliro Technologies (Aliro), a spinout of the NarangLab at Harvard University, makes software that facilitates user access to present day quantum computers."},
+      {name:"QuiX",country:"Netherlands",city:"Amsterdam",region:"Europe",specialty:["hardware"],website:"https://www.seedtable.com/startups/QuiX-39VB34V",lat:52.3676,lng:4.9041,funding:"$17.5m",short_profile:"QuiX is a provider of photonic quantum computing hardware founded in 2019 by Hans van den Vlekkert."},
+      {name:"QuEra",country:"United States",city:"Somerville, Massachusetts",region:"North America",specialty:["hardware"],website:"https://www.seedtable.com/startups/QuEra-JNARWD6",lat:42.3876,lng:-71.0995,funding:"$17.0m",short_profile:"QuEra is a fault-tolerant quantum computers developer founded in 2018 by John Pena."},
+      {name:"Kiutra",country:"Germany",city:"Munich",region:"Europe",specialty:["hardware"],website:"https://www.seedtable.com/startups/Kiutra-4N8J9Z4",lat:48.1351,lng:11.5820,funding:"$15.3m",short_profile:"Provider of helium-3-free cooling solutions for quantum technologies"},
+      {name:"ProteinQure",country:"Canada",city:"Toronto",region:"North America",specialty:["software"],website:"https://www.seedtable.com/startups/ProteinQure-VWK49VE",lat:43.6532,lng:-79.3832,funding:"$15.0m",short_profile:"ProteinQure is a biotechnology company using quantum computing for molecular simulations and drug discovery."},
+      {name:"Qnami",country:"Switzerland",city:"Basel",region:"Europe",specialty:["sensing","hardware"],website:"https://www.seedtable.com/startups/Qnami-39P3AD3",lat:47.5581,lng:7.5878,funding:"$14.1m",short_profile:"Qnami is a quantum technology company that is developing and commercializing quantum sensing and quantum imaging technologies using synthetic diamond and quantum technologies. Qnami&#039;s products are in life-science R&D and semiconductor electronics."},
+      {name:"Post-Quantum",country:"United Kingdom",city:"London",region:"Europe",specialty:["cryptography","hardware","software"],website:"https://www.seedtable.com/startups/Post-Quantum-DBEMDMP",lat:51.5074,lng:-0.1278,funding:"$11.2m",short_profile:"Post-Quantum is a company that is developing quantum-resistant encryption for protection against code-breaking quantum computers and quantum-resistant signature schemes for secure blockchain deployment."},
+      {name:"Qunnect",country:"United States",city:"Stony Brook, New York",region:"North America",specialty:["cryptography"],website:"https://www.seedtable.com/startups/Qunnect-63Z6K5D",lat:40.9085,lng:-73.1325,funding:"$11.0m",short_profile:"Qunnect is a quantum communication company that is developing room-temperature, portable, modular technologies to support optical, long-distance and quantum-secured communication."},
+      {name:"Brilliant",country:"United States",city:"San Francisco",region:"North America",specialty:["software"],website:"https://www.seedtable.com/startups/Brilliant-JNBEJ4",lat:37.7879,lng:-122.4075,funding:"$10.0m",short_profile:"Brilliant is a San Francisco-based educational technology company."},
+      {name:"QxBranch",country:"United States",city:"Washington, D.C.",region:"North America",specialty:["software"],website:"https://www.seedtable.com/startups/QxBranch-99MAAKD",lat:38.8950,lng:-77.0365,funding:"$8.4m",short_profile:"QxBranch is a data analysis and quantum computing software company."},
+      {name:"Menten AI",country:"United States",city:"San Francisco",region:"North America",specialty:["software"],website:"https://www.seedtable.com/startups/Menten_AI-3958AWK",lat:37.7879,lng:-122.4075,funding:"$8.1m",short_profile:"A company using quantum computing and machine learning to design proteins."},
+      {name:"Crypto Quantique",country:"United Kingdom",city:"London",region:"Europe",specialty:["cryptography","software"],website:"https://www.seedtable.com/startups/Crypto_Quantique-NMGP6KV",lat:51.5074,lng:-0.1278,funding:"$8.0m",short_profile:"Crypto Quantique is a company that specializes in quantum cyber security."},
+      {name:"Guardtime",country:"United States",city:"California",region:"North America",specialty:["cryptography","software"],website:"https://www.seedtable.com/startups/Guardtime-X6RWWB",lat:36.7015,lng:-118.7560,funding:"$8.0m",short_profile:"Guardtime&#039;s Black Lantern platform provides real-time cybersecurity and data-centric asset protection."},
+      {name:"ID Quantique (company)",country:"Switzerland",city:"Geneva",region:"Europe",specialty:["cryptography","hardware"],website:"https://www.seedtable.com/startups/ID_Quantique_%28company%29-5KKK4ZM",lat:46.2018,lng:6.1466,funding:"$5.6m",short_profile:"ID Quantique is a company developing quantum cybersecurity products, quantum scientific instrumentation, and quantum random number generation."},
+      {name:"EvolutionQ",country:"Canada",city:"Waterloo, Ontario",region:"North America",specialty:["cryptography","hardware","software"],website:"https://www.seedtable.com/startups/EvolutionQ-EA5XV98",lat:43.4653,lng:-80.5223,funding:"$5.5m",short_profile:"A company offering a suite of proprietary products and services including quantum risk assessments, roadmap design and implementation, quantum safe hardware and software, and education services to allow organizations to avoid quantum security threats to their IT infrastructure."},
+      {name:"HQS Quantum Simulations",country:"Germany",city:"Karlsruhe",region:"Europe",specialty:["software","materials"],website:"https://www.seedtable.com/startups/HQS_Quantum_Simulations-8ANBR8R",lat:49.0069,lng:8.4034,funding:"$5.2m",short_profile:"HQS Quantum Simulations Company is a Karlsruhe-based company developing quantum computing software and algorithms for predicting the properties of performance materials, specialty chemicals, and pharmaceutical companies."},
+      {name:"BosonQ PSI",country:"India",city:"India",region:"Asia-Pacific",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/BosonQ_PSI-EA8D646",lat:22.3511,lng:78.6677,funding:"$5.0m",short_profile:"BosonQ Psi is a software venture that leverages the power of Quantum computing to perform simulations. We build simulation capabilities utilizing a hybrid infrastructure of quantum computers and classical high-performance computers (HPC) to highlight near-term value additions to our customers."},
+      {name:"Crypta Labs",country:"United Kingdom",city:"London",region:"Europe",specialty:["cryptography","hardware","software"],website:"https://www.seedtable.com/startups/Crypta_Labs-BWKN38G",lat:51.5074,lng:-0.1278,funding:"$4.7m",short_profile:"Crypta Labs is quantum security startup that is developing a quantum-based encryption chip and software to secure the Internet of Things. The company developed a Quantum Random Number Generator (QRNG) for mobile devices and an integrated security chip for others. The company is targeting transport, military and medical markets."},
+      {name:"Sigma-i",country:"Japan",city:"Sendai",region:"Asia-Pacific",specialty:["software"],website:"https://www.seedtable.com/startups/Sigma-i-BWMVG8E",lat:38.2678,lng:140.8691,funding:"$4.6m",short_profile:"Sigma-i is a Sendai-based company founded in 2019 by Masayuki Ohzeki, Masamichi Miyama and Kentaro ISE."},
+      {name:"KETS Quantum Security",country:"United Kingdom",city:"Bristol",region:"Europe",specialty:["cryptography","hardware"],website:"https://www.seedtable.com/startups/KETS_Quantum_Security-EAVEYX4",lat:51.4538,lng:-2.5973,funding:"$4.4m",short_profile:"Company developing optical communications hardware for strong digital encryption."},
+      {name:"Qlm Technology Ltd",country:"United Kingdom",city:"Bristol",region:"Europe",specialty:["sensing","software"],website:"https://www.seedtable.com/startups/Qlm_Technology_Ltd-R9NGAK8",lat:51.4538,lng:-2.5973,funding:"$4.4m",short_profile:"Qlm Technology Ltd is a Bristol-based company developing quantum gas sensing technology for the oil and gas industry."},
+      {name:"Qubitekk",country:"United States",city:"Vista, California",region:"North America",specialty:["hardware"],website:"https://www.seedtable.com/startups/Qubitekk-YX366E5",lat:33.2021,lng:-117.2425,funding:"$4.3m",short_profile:"Qubitekk is a company that is making quantum technologies for scientists, engineers, and developers."},
+      {name:"Strangeworks",country:"United States",city:"United States",region:"North America",specialty:["hardware","software"],website:"https://www.seedtable.com/startups/Strangeworks-GEZG9KJ",lat:39.7837,lng:-100.4459,funding:"$4.0m",short_profile:"Strangeworks is a company offering a hardware-agnostic quantum computing platform founded in 2018 by Whurley."},
+      {name:"Horizon Quantum Computing",country:"Singapore",city:"Singapore",region:"Asia-Pacific",specialty:["software"],website:"https://www.seedtable.com/startups/Horizon_Quantum_Computing-YXVE98V",lat:1.3571,lng:103.8195,funding:"$3.2m",short_profile:"Horizon Quantum Computing is a Singapore-based company developing quantum software development tools founded in 2018."}
     ];
 
     const colorBySpecialty = {
@@ -201,13 +419,124 @@
       sensing: '#ef5da8',
       materials: '#c5e55a'
     };
+    const fundingByCompany = {
+      'Alice & Bob': '$66.6m',
+      'Anyon Systems': '$15.0m',
+      'Atom Computing': '$81.0m',
+      'Classiq': '$157.5m',
+      'D-Wave Quantum': '$185.7m',
+      'Multiverse Computing': '$254.6m',
+      'Nu Quantum': '$128.6m',
+      'ORCA Computing': '$30.0m',
+      'Oxford Quantum Circuits': '$191.5m',
+      'Pasqal': '$140.5m',
+      'Phasecraft': '$66.7m',
+      'PsiQuantum': '$2.2b',
+      'Q-CTRL': '$183.4m',
+      'Quandela': '$88.0m',
+      'Quantum Machines': '$73.0m',
+      'Quantum Motion': '$9.8m',
+      'QuintessenceLabs': '$18.8m',
+      'QunaSys': '$2.8m',
+      'Rigetti Computing': '$269.5m',
+      'Riverlane': '$28.2m',
+      'SandboxAQ': '$500.0m',
+      'SEEQC': '$56.4m',
+      'SpeQtral': '$1.9m',
+      'Xanadu': '$137.1m'
+    };
+    const LIFECYCLE_STAGES = ['active', 'acquired', 'merged', 'shutdown'];
+    const MATURITY_STAGES = ['research', 'pilot', 'production', 'revenue-stage'];
+    const lifecycleByCompany = {
+      'Cambridge Quantum Computing': { status: 'merged', effective_date: '2021-12-01', note: 'Merged into Quantinuum' }
+    };
+    const maturityByCompany = {
+      'IonQ': 'revenue-stage',
+      'Rigetti Computing': 'revenue-stage',
+      'D-Wave Quantum': 'revenue-stage',
+      'D-Wave Systems': 'revenue-stage',
+      'Quantinuum': 'revenue-stage',
+      'IQM': 'production',
+      'PsiQuantum': 'pilot',
+      'Xanadu': 'production',
+      'Pasqal': 'production',
+      'Oxford Quantum Circuits': 'production'
+    };
+    const partnershipByCompany = {
+      'IonQ': ['AWS Braket', 'Azure Quantum', 'NVIDIA'],
+      'Rigetti Computing': ['AWS Braket', 'Azure Quantum'],
+      'D-Wave Quantum': ['AWS Braket', 'Google Cloud', 'Government Labs'],
+      'Quantinuum': ['Azure Quantum', 'NVIDIA', 'Enterprise Pilots'],
+      'Xanadu': ['NVIDIA', 'PennyLane Ecosystem', 'Cloud Providers'],
+      'Pasqal': ['IBM Quantum Network', 'Enterprise Pilots'],
+      'Quandela': ['OVHcloud', 'European Research Labs'],
+      'Classiq': ['AWS Braket', 'Azure Quantum', 'IBM Quantum'],
+      'Quantum Machines': ['NVIDIA', 'Superconducting Hardware OEMs'],
+      'Q-CTRL': ['IBM Quantum', 'AWS Braket', 'Defense Programs'],
+      'QunaSys': ['Pharma Partners', 'Cloud Providers'],
+      'SandboxAQ': ['Google Cloud', 'Enterprise Security Partners'],
+      'SpeQtral': ['Satellite Operators', 'Government Programs'],
+      'QNu Labs': ['Telecom Operators', 'Defense Programs'],
+      'Riverlane': ['Hardware OEMs', 'University Labs'],
+      'Nu Quantum': ['Hardware OEMs', 'University Labs'],
+      'Alice & Bob': ['NVIDIA', 'European Research Labs'],
+      'ORCA Computing': ['Enterprise Pilots', 'Cloud Providers']
+    };
+    const SAVED_VIEW_STORAGE_KEY = 'quantum_globe_saved_views_v1';
     const COUNTRIES_GEOJSON_URL = 'https://unpkg.com/world-atlas@2/countries-110m.json';
     const BORDER_COLOR = 'rgba(80, 255, 255, 0.85)';
+    const CONTINENT_VIEWS = {
+      'North America': { lat: 40, lng: -100, altitude: 1.35 },
+      Europe: { lat: 51, lng: 12, altitude: 1.15 },
+      'Middle East': { lat: 27, lng: 44, altitude: 1.45 },
+      'Asia-Pacific': { lat: 24, lng: 108, altitude: 1.35 },
+      Oceania: { lat: -25, lng: 137, altitude: 1.45 },
+      'Latin America': { lat: -16, lng: -61, altitude: 1.45 }
+    };
+    const POINT_VISUALS = {
+      baseAltitude: 0.015,
+      baseRadius: 0.366025,
+      focusAltitude: 0.028,
+      focusRadius: 0.52
+    };
+    const METRO_HUBS = {
+      paris: { label: 'Paris', lat: 48.8566, lng: 2.3522, radiusKm: 130 },
+      london: { label: 'London', lat: 51.5072, lng: -0.1276, radiusKm: 130 },
+      boston: { label: 'Boston', lat: 42.3601, lng: -71.0589, radiusKm: 120 },
+      sf: { label: 'San Francisco Bay', lat: 37.7749, lng: -122.4194, radiusKm: 105 },
+      tel_aviv: { label: 'Tel Aviv', lat: 32.0853, lng: 34.7818, radiusKm: 95 },
+      cambridge_uk: { label: 'Cambridge (UK)', lat: 52.2053, lng: 0.1218, radiusKm: 95 },
+      singapore: { label: 'Singapore', lat: 1.3521, lng: 103.8198, radiusKm: 75 },
+      sydney: { label: 'Sydney', lat: -33.8688, lng: 151.2093, radiusKm: 115 },
+      bristol: { label: 'Bristol', lat: 51.4545, lng: -2.5879, radiusKm: 95 },
+      toronto_waterloo: { label: 'Toronto-Waterloo Corridor', lat: 43.56, lng: -79.95, radiusKm: 110 },
+      vancouver_burnaby: { label: 'Vancouver-Burnaby Corridor', lat: 49.265, lng: -123.05, radiusKm: 65 },
+      canada: { label: 'Canada', lat: 56.1304, lng: -106.3468, radiusKm: 3000, country: 'Canada' }
+    };
 
     const regionFilter = document.getElementById('regionFilter');
     const specialtyFilter = document.getElementById('specialtyFilter');
     const searchInput = document.getElementById('searchInput');
+    const lifecycleFilter = document.getElementById('lifecycleFilter');
+    const maturityFilter = document.getElementById('maturityFilter');
+    const viewNameInput = document.getElementById('viewNameInput');
+    const saveViewBtn = document.getElementById('saveViewBtn');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    const savedViewsSelect = document.getElementById('savedViewsSelect');
+    const drillDownToggle = document.getElementById('drillDownToggle');
     const stats = document.getElementById('stats');
+    const drilldownStats = document.getElementById('drilldownStats');
+    const compareCountryA = document.getElementById('compareCountryA');
+    const compareCountryB = document.getElementById('compareCountryB');
+    const comparisonCard = document.getElementById('comparisonCard');
+    const partnershipCard = document.getElementById('partnershipCard');
+    const partnershipGraph = document.getElementById('partnershipGraph');
+    const qualityCard = document.getElementById('qualityCard');
+    const metroHubSelect = document.getElementById('metroHubSelect');
+    const metroMap = document.getElementById('metroMap');
+    const metroNote = document.getElementById('metroNote');
+    const clearMetroSelection = document.getElementById('clearMetroSelection');
+    const metroSelectionState = document.getElementById('metroSelectionState');
 
     const regions = [...new Set(STARTUPS.map(s => s.region))].sort();
     const specialties = [...new Set(STARTUPS.flatMap(s => s.specialty))].sort();
@@ -226,23 +555,64 @@
       specialtyFilter.appendChild(o);
     });
 
+    LIFECYCLE_STAGES.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s;
+      o.textContent = s[0].toUpperCase() + s.slice(1);
+      lifecycleFilter.appendChild(o);
+    });
+
+    MATURITY_STAGES.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s;
+      o.textContent = s[0].toUpperCase() + s.slice(1);
+      maturityFilter.appendChild(o);
+    });
+
+    Object.entries(METRO_HUBS).forEach(([id, hub]) => {
+      const opt = document.createElement('option');
+      opt.value = id;
+      opt.textContent = hub.label;
+      metroHubSelect.appendChild(opt);
+    });
+
+    const countryToRegion = Object.fromEntries(
+      STARTUPS.map(s => [normalizeCountryName(s.country), s.region])
+    );
+    let hoveredPointRegion = null;
+    let hoveredPolygonRegion = null;
+    let focusedRegion = null;
+    let previousPointOfView = null;
+    let currentBaseFilteredStartups = [];
+    let currentFilteredStartups = [];
+    let metroSelectedStartupIds = null;
+    let metroSelectionLabel = '';
+    let metroClusterMembersById = {};
+    let suppressUrlSync = false;
+    let pointerInsideGlobe = false;
+
     const world = Globe()(document.getElementById('globe'))
       .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
-      .pointAltitude(0.015)
-      .pointRadius(0.366025)
+      .pointAltitude(POINT_VISUALS.baseAltitude)
+      .pointRadius(POINT_VISUALS.baseRadius)
       .pointLabel(d => `
         <div class="tooltip">
           <b>${d.name}</b><br/>
           ${d.city}, ${d.country}<br/>
           Region: ${d.region}<br/>
+          Lifecycle: ${d.lifecycle_status}<br/>
+          ${d.lifecycle_effective_date ? `Lifecycle date: ${d.lifecycle_effective_date}<br/>` : ''}
+          Maturity: ${d.maturity_stage}<br/>
           Specialty: ${d.specialty.join(', ')}<br/>
+          Funding: ${d.funding}<br/>
           ${d.short_profile}<br/>
           <a href="${d.website}" target="_blank" rel="noopener">Website</a>
         </div>`)
       .onPointClick(d => window.open(d.website, '_blank', 'noopener'))
       .onPointHover(point => {
-        world.controls().autoRotate = !point;
+        hoveredPointRegion = point ? point.region : null;
+        syncHoverState();
       });
 
     world.controls().autoRotate = true;
@@ -260,7 +630,692 @@
         .polygonSideColor(() => 'rgba(0, 0, 0, 0)')
         .polygonStrokeColor(() => BORDER_COLOR)
         .polygonAltitude(0.0012)
-        .polygonsTransitionDuration(0);
+        .polygonsTransitionDuration(0)
+        .onPolygonHover(polygon => {
+          const countryName = polygon?.properties?.name || polygon?.properties?.NAME || '';
+          hoveredPolygonRegion = countryToRegion[normalizeCountryName(countryName)] || null;
+          syncHoverState();
+        });
+    }
+
+    function normalizeCountryName(name) {
+      return String(name || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function hexToRgba(hexColor, alpha) {
+      const hex = String(hexColor || '').replace('#', '');
+      if (hex.length !== 6) return hexColor;
+      const r = parseInt(hex.slice(0, 2), 16);
+      const g = parseInt(hex.slice(2, 4), 16);
+      const b = parseInt(hex.slice(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function currentHoveredRegion() {
+      return hoveredPointRegion || hoveredPolygonRegion;
+    }
+
+    function currentActiveRegion() {
+      const hoveredRegion = currentHoveredRegion();
+      if (hoveredRegion) return hoveredRegion;
+      if (drillDownToggle.checked && regionFilter.value !== 'all') return regionFilter.value;
+      return null;
+    }
+
+    function focusRegion(region) {
+      const target = CONTINENT_VIEWS[region];
+      if (!target || focusedRegion === region) return;
+      if (!focusedRegion) {
+        previousPointOfView = world.pointOfView();
+      }
+      focusedRegion = region;
+      world.pointOfView(target, 850);
+    }
+
+    function clearRegionFocus() {
+      if (!focusedRegion) return;
+      focusedRegion = null;
+      if (previousPointOfView) {
+        world.pointOfView(previousPointOfView, 850);
+        previousPointOfView = null;
+      }
+    }
+
+    function updatePointEmphasis() {
+      const activeRegion = currentActiveRegion();
+      const hasActiveRegion = Boolean(activeRegion);
+      world
+        .pointAltitude(d => (
+          hasActiveRegion && d.region === activeRegion
+            ? POINT_VISUALS.focusAltitude
+            : POINT_VISUALS.baseAltitude
+        ))
+        .pointRadius(d => (
+          hasActiveRegion && d.region === activeRegion
+            ? POINT_VISUALS.focusRadius
+            : POINT_VISUALS.baseRadius
+        ))
+        .pointColor(d => {
+          if (!hasActiveRegion || d.region === activeRegion) return d.color;
+          return hexToRgba(d.color, 0.25);
+        });
+    }
+
+    function syncHoverState() {
+      const activeRegion = currentActiveRegion();
+      world.controls().autoRotate = !activeRegion && !pointerInsideGlobe;
+      // Disable continent auto-zoom on hover/selection to avoid interaction glitches.
+      updatePointEmphasis();
+      updateDrilldownPanels();
+    }
+
+    function sortByCountThenName(entries) {
+      return entries.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+    }
+
+    function aggregateCountryStats(data) {
+      const countryMap = new Map();
+      data.forEach(s => {
+        if (!countryMap.has(s.country)) {
+          countryMap.set(s.country, {
+            name: s.country,
+            count: 0,
+            specialties: {},
+            fundingKnown: 0,
+            foundedKnown: 0,
+            recentFounded: 0,
+            foundedYears: []
+          });
+        }
+        const row = countryMap.get(s.country);
+        row.count += 1;
+        s.specialty.forEach(sp => {
+          row.specialties[sp] = (row.specialties[sp] || 0) + 1;
+        });
+        if (s.funding && s.funding !== 'Undisclosed') {
+          row.fundingKnown += 1;
+        }
+        if (Number.isInteger(s.founded_year)) {
+          row.foundedKnown += 1;
+          row.foundedYears.push(s.founded_year);
+          if (s.founded_year >= 2020) {
+            row.recentFounded += 1;
+          }
+        }
+      });
+      return sortByCountThenName(Array.from(countryMap.values()));
+    }
+
+    function topSpecialtiesLabel(specialtyMap) {
+      return Object.entries(specialtyMap)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .slice(0, 2)
+        .map(([name]) => name)
+        .join(', ') || 'n/a';
+    }
+
+    function setCountryOptions(options) {
+      const previousA = compareCountryA.value;
+      const previousB = compareCountryB.value;
+      compareCountryA.innerHTML = '';
+      compareCountryB.innerHTML = '';
+
+      options.forEach(country => {
+        const aOpt = document.createElement('option');
+        aOpt.value = country;
+        aOpt.textContent = country;
+        compareCountryA.appendChild(aOpt);
+
+        const bOpt = document.createElement('option');
+        bOpt.value = country;
+        bOpt.textContent = country;
+        compareCountryB.appendChild(bOpt);
+      });
+
+      if (!options.length) return;
+
+      compareCountryA.value = options.includes(previousA) ? previousA : options[0];
+      const fallbackB = options[1] || options[0];
+      compareCountryB.value = options.includes(previousB) && previousB !== compareCountryA.value
+        ? previousB
+        : fallbackB;
+    }
+
+    function medianYear(years) {
+      if (!years.length) return null;
+      const sorted = [...years].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      if (sorted.length % 2 === 1) return sorted[mid];
+      return Math.round((sorted[mid - 1] + sorted[mid]) / 2);
+    }
+
+    function foundedYearFromStartup(s) {
+      if (Number.isInteger(s.founded_year)) return s.founded_year;
+      const profile = String(s.short_profile || '');
+      const match = profile.match(/\bfounded in\s+(\d{4})\b/i);
+      return match ? Number(match[1]) : null;
+    }
+
+    function lifecycleForStartup(s) {
+      const override = lifecycleByCompany[s.name];
+      if (override) return override;
+      return { status: 'active', effective_date: null, note: '' };
+    }
+
+    function maturityForStartup(s) {
+      const override = maturityByCompany[s.name];
+      if (override) return override;
+      const profile = String(s.short_profile || '').toLowerCase();
+      if (profile.includes('products') || profile.includes('offers') || profile.includes('commercializing')) {
+        return 'production';
+      }
+      if (profile.includes('research') || profile.includes('aiming to develop')) {
+        return 'research';
+      }
+      if (s.specialty.includes('hardware') && s.specialty.includes('software')) return 'pilot';
+      if (s.specialty.includes('hardware') && !s.specialty.includes('software')) return 'research';
+      return 'pilot';
+    }
+
+    function foundedTrendBuckets(data) {
+      const buckets = {
+        'Pre-2015': 0,
+        '2015-2019': 0,
+        '2020+': 0,
+        Unknown: 0
+      };
+      data.forEach(s => {
+        const y = s.founded_year;
+        if (!Number.isInteger(y)) {
+          buckets.Unknown += 1;
+        } else if (y < 2015) {
+          buckets['Pre-2015'] += 1;
+        } else if (y <= 2019) {
+          buckets['2015-2019'] += 1;
+        } else {
+          buckets['2020+'] += 1;
+        }
+      });
+      return buckets;
+    }
+
+    function makeStartupId(startup) {
+      return `${startup.name}|${startup.city}|${startup.country}`;
+    }
+
+    function normalizedName(name) {
+      return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+    }
+
+    function currentCameraState() {
+      const pov = world.pointOfView();
+      return {
+        lat: Number(pov.lat?.toFixed?.(4) || pov.lat || 0),
+        lng: Number(pov.lng?.toFixed?.(4) || pov.lng || 0),
+        altitude: Number(pov.altitude?.toFixed?.(4) || pov.altitude || 1.8)
+      };
+    }
+
+    function buildViewState() {
+      const ids = metroSelectedStartupIds ? Array.from(metroSelectedStartupIds) : [];
+      return {
+        region: regionFilter.value,
+        specialty: specialtyFilter.value,
+        lifecycle: lifecycleFilter.value,
+        maturity: maturityFilter.value,
+        search: searchInput.value,
+        drillDown: drillDownToggle.checked,
+        metroHub: metroHubSelect.value,
+        metroSelectionIds: ids.slice(0, 50),
+        metroSelectionLabel,
+        compareA: compareCountryA.value,
+        compareB: compareCountryB.value,
+        camera: currentCameraState()
+      };
+    }
+
+    function applyViewState(state) {
+      if (!state || typeof state !== 'object') return;
+      if (state.region) regionFilter.value = state.region;
+      if (state.specialty) specialtyFilter.value = state.specialty;
+      if (state.lifecycle) lifecycleFilter.value = state.lifecycle;
+      if (state.maturity) maturityFilter.value = state.maturity;
+      if (typeof state.search === 'string') searchInput.value = state.search;
+      if (typeof state.drillDown === 'boolean') drillDownToggle.checked = state.drillDown;
+      if (state.metroHub && METRO_HUBS[state.metroHub]) metroHubSelect.value = state.metroHub;
+      if (Array.isArray(state.metroSelectionIds) && state.metroSelectionIds.length) {
+        setMetroSelection(state.metroSelectionIds, state.metroSelectionLabel || 'Shared metro cluster');
+      } else {
+        clearMetroSelectionState();
+      }
+      suppressUrlSync = true;
+      applyFilters();
+      suppressUrlSync = false;
+      if (state.compareA) compareCountryA.value = state.compareA;
+      if (state.compareB) compareCountryB.value = state.compareB;
+      if (state.camera && Number.isFinite(state.camera.lat) && Number.isFinite(state.camera.lng) && Number.isFinite(state.camera.altitude)) {
+        world.pointOfView(state.camera, 0);
+      }
+      updateDrilldownPanels();
+    }
+
+    function encodeViewState(state) {
+      return encodeURIComponent(JSON.stringify(state));
+    }
+
+    function decodeViewState(raw) {
+      try {
+        return JSON.parse(decodeURIComponent(raw));
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function syncUrlWithCurrentState() {
+      if (suppressUrlSync) return;
+      const state = buildViewState();
+      const hash = `view=${encodeViewState(state)}`;
+      history.replaceState(null, '', `${location.pathname}${location.search}#${hash}`);
+    }
+
+    function loadStateFromUrlIfPresent() {
+      const hash = String(location.hash || '').replace(/^#/, '');
+      if (!hash.startsWith('view=')) return;
+      const parsed = decodeViewState(hash.slice(5));
+      if (parsed) applyViewState(parsed);
+    }
+
+    function loadSavedViews() {
+      try {
+        return JSON.parse(localStorage.getItem(SAVED_VIEW_STORAGE_KEY) || '[]');
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function saveSavedViews(views) {
+      localStorage.setItem(SAVED_VIEW_STORAGE_KEY, JSON.stringify(views));
+    }
+
+    function renderSavedViewsOptions() {
+      const views = loadSavedViews();
+      const previous = savedViewsSelect.value;
+      savedViewsSelect.innerHTML = '<option value="">Select a saved view</option>';
+      views.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.id;
+        opt.textContent = v.name;
+        savedViewsSelect.appendChild(opt);
+      });
+      if (previous && views.some(v => v.id === previous)) savedViewsSelect.value = previous;
+    }
+
+    function saveCurrentView() {
+      const name = viewNameInput.value.trim() || `View ${new Date().toLocaleString()}`;
+      const views = loadSavedViews();
+      views.unshift({
+        id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+        name,
+        created_at: new Date().toISOString(),
+        state: buildViewState()
+      });
+      saveSavedViews(views.slice(0, 25));
+      renderSavedViewsOptions();
+    }
+
+    function loadSavedViewById(id) {
+      if (!id) return;
+      const view = loadSavedViews().find(v => v.id === id);
+      if (view?.state) applyViewState(view.state);
+    }
+
+    function copyShareLink() {
+      syncUrlWithCurrentState();
+      const url = location.href;
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(url).catch(() => {});
+      }
+    }
+
+    function haversineKm(lat1, lng1, lat2, lng2) {
+      const toRad = deg => deg * Math.PI / 180;
+      const dLat = toRad(lat2 - lat1);
+      const dLng = toRad(lng2 - lng1);
+      const a = Math.sin(dLat / 2) ** 2
+        + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+      return 6371 * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    }
+
+    function metroCandidates(hub, data) {
+      if (hub.country) {
+        return data.filter(s => s.country === hub.country);
+      }
+      return data.filter(s => haversineKm(hub.lat, hub.lng, s.lat, s.lng) <= hub.radiusKm);
+    }
+
+    function metroScopeLabel(hub) {
+      if (hub.country) return `country = ${hub.country}`;
+      return `${hub.radiusKm} km radius`;
+    }
+
+    function setMetroSelection(ids, label) {
+      metroSelectedStartupIds = ids ? new Set(ids) : null;
+      metroSelectionLabel = label || '';
+    }
+
+    function clearMetroSelectionState() {
+      setMetroSelection(null, '');
+    }
+
+    function updateMetroSelectionState() {
+      const active = Boolean(metroSelectedStartupIds && metroSelectedStartupIds.size);
+      clearMetroSelection.disabled = !active;
+      metroSelectionState.textContent = active
+        ? `Cluster selected: ${metroSelectionLabel}.`
+        : 'Tip: click a metro node/cluster to filter globe and sidebar.';
+    }
+
+    function projectMetroPoint(lat, lng, bounds, width, height, pad) {
+      const x = pad + ((lng - bounds.minLng) / (bounds.maxLng - bounds.minLng || 1)) * (width - pad * 2);
+      const y = pad + ((bounds.maxLat - lat) / (bounds.maxLat - bounds.minLat || 1)) * (height - pad * 2);
+      return { x, y };
+    }
+
+    function clusterMetroPoints(points, thresholdPx) {
+      const clusters = [];
+      points.forEach(point => {
+        let assigned = null;
+        for (const c of clusters) {
+          const dx = point.x - c.x;
+          const dy = point.y - c.y;
+          if (Math.sqrt(dx * dx + dy * dy) <= thresholdPx) {
+            assigned = c;
+            break;
+          }
+        }
+        if (!assigned) {
+          clusters.push({ x: point.x, y: point.y, members: [point] });
+          return;
+        }
+        assigned.members.push(point);
+        const n = assigned.members.length;
+        assigned.x = (assigned.x * (n - 1) + point.x) / n;
+        assigned.y = (assigned.y * (n - 1) + point.y) / n;
+      });
+      return clusters;
+    }
+
+    function escapeHtml(text) {
+      return String(text || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function clusterLabel(cluster) {
+      if (cluster.members.length === 1) return cluster.members[0].name;
+      const cityCounts = {};
+      cluster.members.forEach(m => {
+        cityCounts[m.city] = (cityCounts[m.city] || 0) + 1;
+      });
+      const topCity = Object.entries(cityCounts).sort((a, b) => b[1] - a[1])[0]?.[0];
+      if (topCity && cityCounts[topCity] >= Math.ceil(cluster.members.length / 2)) {
+        return `${topCity} (${cluster.members.length})`;
+      }
+      return `${cluster.members.length} startups`;
+    }
+
+    function renderMetroMap() {
+      const hub = METRO_HUBS[metroHubSelect.value] || METRO_HUBS.paris;
+      const data = metroCandidates(hub, currentBaseFilteredStartups);
+      const width = metroMap.clientWidth || 280;
+      const height = metroMap.clientHeight || 220;
+      metroClusterMembersById = {};
+
+      if (!data.length) {
+        metroMap.innerHTML = '<div class="metro-empty">No startups in this metro under current filters.</div>';
+        metroNote.textContent = `${hub.label}: 0 startups in ${metroScopeLabel(hub)}`;
+        updateMetroSelectionState();
+        return;
+      }
+
+      const pad = 18;
+      const lats = data.map(d => d.lat);
+      const lngs = data.map(d => d.lng);
+      const latPadding = Math.max((Math.max(...lats) - Math.min(...lats)) * 0.35, 0.08);
+      const lngPadding = Math.max((Math.max(...lngs) - Math.min(...lngs)) * 0.35, 0.08);
+      const bounds = {
+        minLat: Math.min(...lats) - latPadding,
+        maxLat: Math.max(...lats) + latPadding,
+        minLng: Math.min(...lngs) - lngPadding,
+        maxLng: Math.max(...lngs) + lngPadding
+      };
+
+      const projected = data.map(d => ({
+        ...d,
+        ...projectMetroPoint(d.lat, d.lng, bounds, width, height, pad)
+      }));
+      const clusters = clusterMetroPoints(projected, 16);
+
+      const gridLines = [0.2, 0.4, 0.6, 0.8].map(v => `
+        <line x1="${Math.round(width * v)}" y1="0" x2="${Math.round(width * v)}" y2="${height}" stroke="rgba(255,255,255,0.05)" />
+        <line x1="0" y1="${Math.round(height * v)}" x2="${width}" y2="${Math.round(height * v)}" stroke="rgba(255,255,255,0.05)" />
+      `).join('');
+
+      const nodes = clusters.map((cluster, index) => {
+        const clusterId = `cluster_${index}`;
+        metroClusterMembersById[clusterId] = cluster.members.map(m => m.startup_id);
+        const size = cluster.members.length;
+        const r = 4 + Math.min(size, 8);
+        const lead = cluster.members[0];
+        const label = clusterLabel(cluster);
+        const tooltip = size === 1
+          ? `${lead.name} | ${lead.city}`
+          : `${size} startups | ${cluster.members.slice(0, 4).map(m => m.name).join(', ')}${size > 4 ? ', ...' : ''}`;
+        const isSelected = Boolean(
+          metroSelectedStartupIds
+          && metroSelectedStartupIds.size === cluster.members.length
+          && cluster.members.every(m => metroSelectedStartupIds.has(m.startup_id))
+        );
+        const stroke = isSelected ? '#ffffff' : 'rgba(255,255,255,0.85)';
+        const strokeWidth = isSelected ? 2.2 : 1;
+        return `
+          <g>
+            <circle data-cluster-id="${clusterId}" cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="${r}" fill="${lead.color}" fill-opacity="0.85" stroke="${stroke}" stroke-width="${strokeWidth}" style="cursor:pointer"></circle>
+            <text data-cluster-id="${clusterId}" x="${(cluster.x + r + 3).toFixed(1)}" y="${(cluster.y - r - 2).toFixed(1)}" fill="#dfefff" font-size="10" style="cursor:pointer">${escapeHtml(label)}</text>
+            <title>${escapeHtml(tooltip)}</title>
+          </g>
+        `;
+      }).join('');
+
+      metroMap.innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(hub.label)} metro startup map">
+          <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
+          ${gridLines}
+          <circle cx="${width / 2}" cy="${height / 2}" r="${Math.min(width, height) * 0.42}" fill="none" stroke="rgba(0,194,168,0.22)" stroke-width="1.2"></circle>
+          ${nodes}
+        </svg>
+      `;
+      metroNote.textContent = `${hub.label}: ${data.length} startups in ${metroScopeLabel(hub)}, clustered for readability`;
+      updateMetroSelectionState();
+    }
+
+    function partnershipEdges(data) {
+      return data.flatMap(s => (partnershipByCompany[s.name] || []).map(partner => ({
+        company: s.name,
+        partner
+      })));
+    }
+
+    function renderPartnershipPanel(data) {
+      const edges = partnershipEdges(data);
+      if (!edges.length) {
+        partnershipCard.innerHTML = '<small>No mapped partnerships in current scope.</small>';
+        partnershipGraph.innerHTML = '';
+        return;
+      }
+
+      const partnerCounts = {};
+      edges.forEach(e => {
+        partnerCounts[e.partner] = (partnerCounts[e.partner] || 0) + 1;
+      });
+      const topPartners = Object.entries(partnerCounts)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .slice(0, 5);
+
+      partnershipCard.innerHTML = `
+        <b>Mapped edges:</b> ${edges.length}<br/>
+        <b>Unique partners:</b> ${Object.keys(partnerCounts).length}<br/>
+        <b>Top partners:</b> ${topPartners.map(([k, v]) => `${k} (${v})`).join(', ')}
+      `;
+
+      const topEdgeList = edges
+        .map(e => `${e.company}__${e.partner}`)
+        .reduce((acc, key) => {
+          acc[key] = (acc[key] || 0) + 1;
+          return acc;
+        }, {});
+      const topEdges = Object.entries(topEdgeList)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6)
+        .map(([k]) => {
+          const [company, partner] = k.split('__');
+          return { company, partner };
+        });
+
+      const leftX = 20;
+      const rightX = 260;
+      const rowGap = 24;
+      const startY = 18;
+      const nodes = topEdges.map((e, i) => ({ ...e, y: startY + i * rowGap }));
+
+      const links = nodes.map(n => `<line x1="${leftX + 70}" y1="${n.y}" x2="${rightX - 70}" y2="${n.y}" stroke="rgba(0,194,168,0.45)" stroke-width="1.4"></line>`).join('');
+      const leftLabels = nodes.map(n => `<text x="${leftX}" y="${n.y + 4}" fill="#dfefff" font-size="10">${escapeHtml(n.company.slice(0, 18))}</text>`).join('');
+      const rightLabels = nodes.map(n => `<text x="${rightX - 68}" y="${n.y + 4}" fill="#9fe9ff" font-size="10">${escapeHtml(n.partner.slice(0, 18))}</text>`).join('');
+      partnershipGraph.innerHTML = `
+        <rect x="0" y="0" width="280" height="170" fill="transparent"></rect>
+        ${links}
+        ${leftLabels}
+        ${rightLabels}
+      `;
+    }
+
+    function pct(value, total) {
+      if (!total) return '0%';
+      return `${Math.round((value / total) * 100)}%`;
+    }
+
+    function renderQualityPanel(data) {
+      const total = data.length;
+      if (!total) {
+        qualityCard.innerHTML = '<small>No data in scope.</small>';
+        return;
+      }
+      const fundingKnown = data.filter(s => s.funding && s.funding !== 'Undisclosed').length;
+      const foundedKnown = data.filter(s => Number.isInteger(s.founded_year)).length;
+      const lifecycleKnown = data.filter(s => s.lifecycle_status).length;
+      const lifecycleExplicit = data.filter(s => s.lifecycle_effective_date || s.lifecycle_note).length;
+      const maturityKnown = data.filter(s => s.maturity_stage).length;
+      const maturityExplicit = data.filter(s => Boolean(maturityByCompany[s.name])).length;
+      const partnerMapped = data.filter(s => (partnershipByCompany[s.name] || []).length > 0).length;
+      const websiteKnown = data.filter(s => Boolean(s.website)).length;
+      const geoKnown = data.filter(s => Number.isFinite(s.lat) && Number.isFinite(s.lng)).length;
+      const staleCandidates = data.filter(s => !Number.isInteger(s.founded_year) && (!s.funding || s.funding === 'Undisclosed')).length;
+
+      const identityMap = {};
+      data.forEach(s => {
+        const key = normalizedName(s.name);
+        identityMap[key] = identityMap[key] || new Set();
+        identityMap[key].add(`${s.city}|${s.country}`);
+      });
+      const potentialConflicts = Object.values(identityMap).filter(set => set.size > 1).length;
+
+      qualityCard.innerHTML = `
+        <b>Funding coverage:</b> ${fundingKnown}/${total} (${pct(fundingKnown, total)})<br/>
+        <b>Founded-year coverage:</b> ${foundedKnown}/${total} (${pct(foundedKnown, total)})<br/>
+        <b>Lifecycle coverage:</b> ${lifecycleKnown}/${total} (${pct(lifecycleKnown, total)}) | explicit: ${lifecycleExplicit}<br/>
+        <b>Maturity coverage:</b> ${maturityKnown}/${total} (${pct(maturityKnown, total)}) | explicit: ${maturityExplicit}<br/>
+        <b>Partnership coverage:</b> ${partnerMapped}/${total} (${pct(partnerMapped, total)})<br/>
+        <b>Website/Geo completeness:</b> ${pct(websiteKnown, total)} / ${pct(geoKnown, total)}<br/>
+        <b>Stale candidates:</b> ${staleCandidates}<br/>
+        <b>Potential identity conflicts:</b> ${potentialConflicts}
+      `;
+    }
+
+    function renderComparisonCard(countryRows) {
+      if (countryRows.length < 2) {
+        comparisonCard.innerHTML = '<small>Add broader filters to compare at least two countries.</small>';
+        return;
+      }
+      const countryA = countryRows.find(r => r.name === compareCountryA.value);
+      const countryB = countryRows.find(r => r.name === compareCountryB.value);
+      if (!countryA || !countryB) {
+        comparisonCard.innerHTML = '<small>Select countries to compare.</small>';
+        return;
+      }
+
+      const countDelta = countryA.count - countryB.count;
+      const leader = countDelta === 0
+        ? 'Tie'
+        : `${countDelta > 0 ? countryA.name : countryB.name} leads by ${Math.abs(countDelta)}`;
+      const countryARecentPct = countryA.foundedKnown
+        ? Math.round((countryA.recentFounded / countryA.foundedKnown) * 100)
+        : null;
+      const countryBRecentPct = countryB.foundedKnown
+        ? Math.round((countryB.recentFounded / countryB.foundedKnown) * 100)
+        : null;
+      const countryAMedianYear = medianYear(countryA.foundedYears);
+      const countryBMedianYear = medianYear(countryB.foundedYears);
+
+      comparisonCard.innerHTML = `
+        <b>${countryA.name}</b>: ${countryA.count} startups<br/>
+        <small>Top specialties: ${topSpecialtiesLabel(countryA.specialties)} | Funding disclosed: ${countryA.fundingKnown}/${countryA.count}</small><br/><br/>
+        <small>Founded coverage: ${countryA.foundedKnown}/${countryA.count} | 2020+ share: ${countryARecentPct === null ? 'n/a' : `${countryARecentPct}%`} | Median year: ${countryAMedianYear || 'n/a'}</small><br/><br/>
+        <b>${countryB.name}</b>: ${countryB.count} startups<br/>
+        <small>Top specialties: ${topSpecialtiesLabel(countryB.specialties)} | Funding disclosed: ${countryB.fundingKnown}/${countryB.count}</small><br/><br/>
+        <small>Founded coverage: ${countryB.foundedKnown}/${countryB.count} | 2020+ share: ${countryBRecentPct === null ? 'n/a' : `${countryBRecentPct}%`} | Median year: ${countryBMedianYear || 'n/a'}</small><br/><br/>
+        <b>Result:</b> ${leader}
+      `;
+    }
+
+    function updateDrilldownPanels() {
+      if (!currentFilteredStartups.length) {
+        drilldownStats.innerHTML = '<small>No startups match current filters.</small>';
+        comparisonCard.innerHTML = '<small>No comparison available.</small>';
+        compareCountryA.innerHTML = '';
+        compareCountryB.innerHTML = '';
+        renderMetroMap();
+        return;
+      }
+
+      const activeRegion = currentActiveRegion();
+      const scoped = activeRegion
+        ? currentFilteredStartups.filter(s => s.region === activeRegion)
+        : currentFilteredStartups;
+      const countryRows = aggregateCountryStats(scoped);
+
+      const topCountries = countryRows
+        .slice(0, 5)
+        .map(row => `${row.name} (${row.count})`)
+        .join(', ') || 'None';
+      const regionLabel = activeRegion || 'All regions';
+      const trend = foundedTrendBuckets(scoped);
+      const foundedKnownTotal = scoped.filter(s => Number.isInteger(s.founded_year)).length;
+
+      drilldownStats.innerHTML = `
+        <b>Scope:</b> ${regionLabel}<br/>
+        <b>Startups in scope:</b> ${scoped.length}<br/>
+        <b>Countries in scope:</b> ${countryRows.length}<br/>
+        <b>Top countries:</b> ${topCountries}<br/>
+        <b>Founded-year coverage:</b> ${foundedKnownTotal}/${scoped.length}<br/>
+        <b>Trend:</b> Pre-2015 (${trend['Pre-2015']}), 2015-2019 (${trend['2015-2019']}), 2020+ (${trend['2020+']}), Unknown (${trend.Unknown})
+      `;
+
+      setCountryOptions(countryRows.map(r => r.name));
+      renderComparisonCard(countryRows);
+      renderMetroMap();
     }
 
     function colorFor(startup) {
@@ -274,16 +1329,53 @@
     function applyFilters() {
       const region = regionFilter.value;
       const specialty = specialtyFilter.value;
+      const lifecycle = lifecycleFilter.value;
+      const maturity = maturityFilter.value;
       const query = searchInput.value.trim().toLowerCase();
 
-      const filtered = STARTUPS.filter(s => {
+      const baseFiltered = STARTUPS.filter(s => {
+        const lifecycleObj = lifecycleForStartup(s);
+        const maturityStage = maturityForStartup(s);
         const regionOk = region === 'all' || s.region === region;
         const specialtyOk = specialty === 'all' || s.specialty.includes(specialty);
+        const lifecycleOk = lifecycle === 'all' || lifecycleObj.status === lifecycle;
+        const maturityOk = maturity === 'all' || maturityStage === maturity;
         const searchOk = !query || s.name.toLowerCase().includes(query);
-        return regionOk && specialtyOk && searchOk;
-      }).map(s => ({ ...s, color: colorFor(s) }));
+        return regionOk && specialtyOk && lifecycleOk && maturityOk && searchOk;
+      }).map(s => ({
+        ...s,
+        lifecycle: lifecycleForStartup(s),
+        maturity_stage: maturityForStartup(s),
+      })).map(s => ({
+        ...s,
+        startup_id: makeStartupId(s),
+        color: colorFor(s),
+        funding: s.funding || fundingByCompany[s.name] || 'Undisclosed',
+        founded_year: foundedYearFromStartup(s),
+        lifecycle_status: s.lifecycle.status,
+        lifecycle_effective_date: s.lifecycle.effective_date || '',
+        lifecycle_note: s.lifecycle.note || ''
+      }));
 
-      world.pointsData(filtered).pointColor('color');
+      currentBaseFilteredStartups = baseFiltered;
+      let filtered = baseFiltered;
+      if (metroSelectedStartupIds && metroSelectedStartupIds.size) {
+        const metroFiltered = baseFiltered.filter(s => metroSelectedStartupIds.has(s.startup_id));
+        if (metroFiltered.length) {
+          filtered = metroFiltered;
+        } else {
+          clearMetroSelectionState();
+        }
+      }
+
+      currentFilteredStartups = filtered;
+      world.pointsData(filtered);
+      updatePointEmphasis();
+      if (!currentHoveredRegion()) {
+        syncHoverState();
+      } else {
+        updateDrilldownPanels();
+      }
 
       const byRegion = filtered.reduce((acc, s) => {
         acc[s.region] = (acc[s.region] || 0) + 1;
@@ -293,22 +1385,68 @@
       stats.innerHTML = `
         <b>Total displayed:</b> ${filtered.length} / ${STARTUPS.length}<br/>
         <b>Regions shown:</b> ${Object.keys(byRegion).length}<br/>
-        <b>Breakdown:</b> ${Object.entries(byRegion).map(([k,v]) => `${k} (${v})`).join(', ') || 'None'}
+        <b>Breakdown:</b> ${Object.entries(byRegion).map(([k,v]) => `${k} (${v})`).join(', ') || 'None'}<br/>
+        <b>Metro cluster filter:</b> ${metroSelectedStartupIds && metroSelectedStartupIds.size ? metroSelectionLabel : 'None'}
       `;
+      renderPartnershipPanel(filtered);
+      renderQualityPanel(filtered);
+      syncUrlWithCurrentState();
     }
 
     regionFilter.addEventListener('change', applyFilters);
     specialtyFilter.addEventListener('change', applyFilters);
+    lifecycleFilter.addEventListener('change', applyFilters);
+    maturityFilter.addEventListener('change', applyFilters);
     searchInput.addEventListener('input', applyFilters);
+    drillDownToggle.addEventListener('change', syncHoverState);
+    compareCountryA.addEventListener('change', updateDrilldownPanels);
+    compareCountryB.addEventListener('change', updateDrilldownPanels);
+    saveViewBtn.addEventListener('click', saveCurrentView);
+    copyLinkBtn.addEventListener('click', copyShareLink);
+    savedViewsSelect.addEventListener('change', () => loadSavedViewById(savedViewsSelect.value));
+    metroHubSelect.addEventListener('change', () => {
+      clearMetroSelectionState();
+      applyFilters();
+    });
+    clearMetroSelection.addEventListener('click', () => {
+      clearMetroSelectionState();
+      applyFilters();
+    });
+    metroMap.addEventListener('click', event => {
+      const target = event.target.closest('[data-cluster-id]');
+      if (!target) return;
+      const clusterId = target.getAttribute('data-cluster-id');
+      const startupIds = metroClusterMembersById[clusterId];
+      if (!startupIds || !startupIds.length) return;
+      const count = startupIds.length;
+      const hubLabel = (METRO_HUBS[metroHubSelect.value] || METRO_HUBS.paris).label;
+      const label = count === 1
+        ? `1 startup in ${hubLabel}`
+        : `${count} startups in ${hubLabel}`;
+      setMetroSelection(startupIds, label);
+      applyFilters();
+    });
+    const globeEl = document.getElementById('globe');
+    globeEl.addEventListener('mouseenter', () => {
+      pointerInsideGlobe = true;
+      world.controls().autoRotate = false;
+    });
+    globeEl.addEventListener('mouseleave', () => {
+      pointerInsideGlobe = false;
+      syncHoverState();
+    });
     window.addEventListener('resize', () => {
       world.width(document.getElementById('globe').clientWidth);
       world.height(document.getElementById('globe').clientHeight);
+      renderMetroMap();
     });
 
     loadCountryBorders().catch(err => {
       console.error('Failed to load country borders:', err);
     });
+    renderSavedViewsOptions();
     applyFilters();
+    loadStateFromUrlIfPresent();
   </script>
 </body>
 </html>
