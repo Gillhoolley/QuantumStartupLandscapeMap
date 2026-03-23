@@ -1,6 +1,6 @@
-﻿# Reports Pack
+# Reports Pack
 
-Generated: 2026-03-20 17:52:47 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
 Each report folder contains:
 - `report.md`
@@ -8,13 +8,30 @@ Each report folder contains:
 - `infographic.pdf` (generated in next step)
 
 ## Folders
-- regional_landscape
-- specialty_mix
+- country_benchmark
+- coverage_quality
 - funding_momentum
-- regional_clusters
-- technology_focus
+- interactive_map_filters
 - investor_activity
 - maturity
-- coverage_quality
-- country_benchmark
-- interactive_map_filters
+- regional_clusters
+- regional_landscape
+- specialty_mix
+- technology_focus
+
+- data_quality_scorecard
+- lifecycle_transition
+- maturity_funnel
+- partnership_network
+- hub_competitive_landscape_paris
+- hub_competitive_landscape_london
+- hub_competitive_landscape_boston
+- hub_competitive_landscape_sf
+- hub_competitive_landscape_tel_aviv
+- hub_competitive_landscape_cambridge_uk
+- hub_competitive_landscape_singapore
+- hub_competitive_landscape_sydney
+- hub_competitive_landscape_bristol
+- hub_competitive_landscape_toronto_waterloo
+- hub_competitive_landscape_vancouver_burnaby
+- hub_competitive_landscape_canada
