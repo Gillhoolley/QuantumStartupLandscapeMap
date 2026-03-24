@@ -1,14 +1,14 @@
-﻿# Technology Focus Report
+# Technology Focus Report
 
-Generated: 2026-03-20 17:52:47 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
-Total startups: **55**
+Total startups: **100**
 
 ## Technology Modality Proxy (from specialty tags)
 | technology_proxy | count |
 |---|---|
-| hardware | 41 |
-| software | 25 |
-| cryptography | 7 |
-| sensing | 4 |
-| materials | 7 |
+| hardware | 65 |
+| software | 55 |
+| cryptography | 18 |
+| materials | 10 |
+| sensing | 9 |

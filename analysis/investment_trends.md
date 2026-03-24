@@ -1,17 +1,25 @@
-﻿# Investment Trends
+# Investment Trends
 
-## Objective
-Track emerging trends in quantum startup investment.
+Generated: 3/23/2026 13:16:00 America/New_York
 
-## Suggested Sections
-- Round size evolution
-- Hardware vs software capital split
-- Strategic investor participation
-- Public-private co-funding patterns
-- Geographic concentration shifts
+## Snapshot
+- Total startups: 100
+- Startups with disclosed funding amount: 45 (45.0%)
 
-## Template
-### Trend
-- Evidence:
-- Why it matters:
-- Watchpoints:
+## Top Funded (Disclosed)
+| startup | funding |
+|---|---|
+| IQM | $578.4m |
+| InfiniQuant | $249.3m |
+| Ostendo Technologies | $198.7m |
+| D-Wave Systems | $185.7m |
+| Zapata Computing | $107.6m |
+| Cambridge Quantum Computing | $72.8m |
+| PhaseCraft | $66.7m |
+| Optalysys | $63.7m |
+| QC Ware Corp. | $62.7m |
+| ColdQuanta Inc | $62.1m |
+
+## Watchpoints
+- Funding coverage is partial; trends are directional rather than exhaustive.
+- Round-by-round timing is unavailable in current source fields.

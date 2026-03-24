@@ -1,15 +1,15 @@
-﻿# Interactive Map Filters Report
+# Interactive Map Filters Report
 
-Generated: 2026-03-20 17:52:47 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
-Total startups: **55**
+Total startups: **100**
 
 ## Region Filter Distribution
 | region | count |
 |---|---|
-| Europe | 22 |
-| North America | 14 |
-| Asia-Pacific | 6 |
+| Europe | 41 |
+| North America | 37 |
+| Asia-Pacific | 9 |
 | Middle East | 6 |
 | Oceania | 6 |
 | Latin America | 1 |
@@ -17,8 +17,8 @@ Total startups: **55**
 ## Specialty Filter Distribution
 | specialty | count |
 |---|---|
-| hardware | 41 |
-| software | 25 |
-| cryptography | 7 |
-| sensing | 4 |
-| materials | 7 |
+| hardware | 65 |
+| software | 55 |
+| cryptography | 18 |
+| materials | 10 |
+| sensing | 9 |

@@ -1,6 +1,6 @@
-﻿# Maturity Report
+# Maturity Report
 
-Generated: 2026-03-20 17:52:47 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
 Year-founded values are not present in the current local source (`globe.html`).
 

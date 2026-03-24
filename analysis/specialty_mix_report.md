@@ -1,61 +1,59 @@
-﻿# Specialty Mix Report
+# Specialty Mix Report
 
-Generated: 2026-03-20 17:42:08 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
 Source: `globe.html` startup dataset
 
-Total startups analyzed: **55**
+Total startups analyzed: **100**
 
 ## Overall Specialty Presence (multi-tag)
 | Specialty | Startup Count | % of Startups |
-|---|---:|---:|
-| hardware | 41 | 74.5% |
-| software | 25 | 45.5% |
-| cryptography | 7 | 12.7% |
-| sensing | 4 | 7.3% |
-| materials | 7 | 12.7% |
-
-> Note: A startup can appear in multiple specialty categories.
+|---|---|---|
+| hardware | 65 | 65.0% |
+| software | 55 | 55.0% |
+| cryptography | 18 | 18.0% |
+| materials | 10 | 10.0% |
+| sensing | 9 | 9.0% |
 
 ## Primary Specialty Mix (first listed specialty)
 | Primary Specialty | Startup Count | % of Startups |
-|---|---:|---:|
-| hardware | 38 | 69.1% |
-| software | 11 | 20% |
-| cryptography | 4 | 7.3% |
-| sensing | 2 | 3.6% |
-| materials | 0 | 0% |
+|---|---|---|
+| hardware | 54 | 54.0% |
+| software | 24 | 24.0% |
+| cryptography | 15 | 15.0% |
+| sensing | 7 | 7.0% |
+| materials | 0 | 0.0% |
 
 ## Specialty Mix by Region (multi-tag)
 | Region | Startups in Region | Specialty | Count | % of Region Startups |
-|---|---:|---|---:|---:|
-| Asia-Pacific | 6 | cryptography | 2 | 33.3% |
-| Asia-Pacific | 6 | hardware | 3 | 50% |
-| Asia-Pacific | 6 | materials |  | 0% |
-| Asia-Pacific | 6 | sensing | 0 | 0% |
-| Asia-Pacific | 6 | software | 4 | 66.7% |
-| Europe | 22 | cryptography | 2 | 9.1% |
-| Europe | 22 | hardware | 19 | 86.4% |
-| Europe | 22 | materials | 2 | 9.1% |
-| Europe | 22 | sensing | 0 | 0% |
-| Europe | 22 | software | 10 | 45.5% |
-| Latin America |  | cryptography | 0 | 0% |
-| Latin America |  | hardware | 0 | 0% |
-| Latin America |  | materials |  | 0% |
-| Latin America |  | sensing |  | 0% |
-| Latin America |  | software | 0 | 0% |
-| Middle East | 6 | cryptography |  | 0% |
-| Middle East | 6 | hardware | 3 | 50% |
-| Middle East | 6 | materials | 0 | 0% |
-| Middle East | 6 | sensing | 0 | 0% |
+|---|---|---|---|---|
+| Europe | 41 | cryptography | 8 | 19.5% |
+| Europe | 41 | hardware | 30 | 73.2% |
+| Europe | 41 | materials | 4 | 9.8% |
+| Europe | 41 | sensing | 3 | 7.3% |
+| Europe | 41 | software | 21 | 51.2% |
+| North America | 37 | cryptography | 6 | 16.2% |
+| North America | 37 | hardware | 25 | 67.6% |
+| North America | 37 | materials | 3 | 8.1% |
+| North America | 37 | sensing | 3 | 8.1% |
+| North America | 37 | software | 22 | 59.5% |
+| Asia-Pacific | 9 | cryptography | 2 | 22.2% |
+| Asia-Pacific | 9 | hardware | 4 | 44.4% |
+| Asia-Pacific | 9 | materials | 1 | 11.1% |
+| Asia-Pacific | 9 | sensing | 0 | 0.0% |
+| Asia-Pacific | 9 | software | 7 | 77.8% |
+| Middle East | 6 | cryptography | 1 | 16.7% |
+| Middle East | 6 | hardware | 3 | 50.0% |
+| Middle East | 6 | materials | 0 | 0.0% |
+| Middle East | 6 | sensing | 0 | 0.0% |
 | Middle East | 6 | software | 4 | 66.7% |
-| North America | 14 | cryptography |  | 0% |
-| North America | 14 | hardware | 13 | 92.9% |
-| North America | 14 | materials | 2 | 14.3% |
-| North America | 14 | sensing |  | 0% |
-| North America | 14 | software | 6 | 42.9% |
-| Oceania | 6 | cryptography |  | 0% |
-| Oceania | 6 | hardware | 3 | 50% |
-| Oceania | 6 | materials |  | 0% |
+| Oceania | 6 | cryptography | 1 | 16.7% |
+| Oceania | 6 | hardware | 3 | 50.0% |
+| Oceania | 6 | materials | 1 | 16.7% |
 | Oceania | 6 | sensing | 2 | 33.3% |
-| Oceania | 6 | software |  | 0% |
+| Oceania | 6 | software | 1 | 16.7% |
+| Latin America | 1 | cryptography | 0 | 0.0% |
+| Latin America | 1 | hardware | 0 | 0.0% |
+| Latin America | 1 | materials | 1 | 100.0% |
+| Latin America | 1 | sensing | 1 | 100.0% |
+| Latin America | 1 | software | 0 | 0.0% |

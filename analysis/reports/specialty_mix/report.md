@@ -1,23 +1,23 @@
-﻿# Specialty Mix Report
+# Specialty Mix Report
 
-Generated: 2026-03-20 17:52:47 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
-Total startups: **55**
+Total startups: **100**
 
 ## Overall Specialty Presence (multi-tag)
 | specialty | count | pct |
 |---|---|---|
-| hardware | 41 | 74.5 |
-| software | 25 | 45.5 |
-| cryptography | 7 | 12.7 |
-| sensing | 4 | 7.3 |
-| materials | 7 | 12.7 |
+| hardware | 65 | 65.0% |
+| software | 55 | 55.0% |
+| cryptography | 18 | 18.0% |
+| materials | 10 | 10.0% |
+| sensing | 9 | 9.0% |
 
 ## Primary Specialty (first listed)
 | specialty | count |
 |---|---|
-| hardware | 38 |
-| software | 11 |
-| cryptography | 4 |
-| sensing | 2 |
+| hardware | 54 |
+| software | 24 |
+| cryptography | 15 |
+| sensing | 7 |
 | materials | 0 |

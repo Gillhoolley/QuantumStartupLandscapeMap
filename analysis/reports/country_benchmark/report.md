@@ -1,27 +1,30 @@
-﻿# Country Benchmark Report
+# Country Benchmark Report
 
-Generated: 2026-03-20 17:52:47 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
-Total startups: **55**
+Total startups: **100**
 
 ## Country Ranking
 | rank | country | count | share_pct |
 |---|---|---|---|
-| 1 | United States | 9 | 16.4 |
-| 2 | United Kingdom | 8 | 14.5 |
-| 3 | Australia | 6 | 10.9 |
-| 4 | Canada | 5 | 9.1 |
-| 5 | France | 5 | 9.1 |
-| 6 | Israel | 5 | 9.1 |
-| 7 | Austria | 2 | 3.6 |
-| 8 | India | 2 | 3.6 |
-| 9 | Netherlands | 2 | 3.6 |
-| 10 | Singapore | 2 | 3.6 |
-| 11 | Spain | 2 | 3.6 |
-| 12 | Brazil | 1 | 1.8 |
-| 13 | China | 1 | 1.8 |
-| 14 | Finland | 1 | 1.8 |
-| 15 | Germany | 1 | 1.8 |
-| 16 | Japan | 1 | 1.8 |
-| 17 | Saudi Arabia | 1 | 1.8 |
-| 18 | Switzerland | 1 | 1.8 |
+| 1 | United States | 27 | 27.0 |
+| 2 | United Kingdom | 17 | 17.0 |
+| 3 | Canada | 10 | 10.0 |
+| 4 | Australia | 6 | 6.0 |
+| 5 | France | 5 | 5.0 |
+| 6 | Israel | 5 | 5.0 |
+| 7 | Germany | 4 | 4.0 |
+| 8 | India | 3 | 3.0 |
+| 9 | Netherlands | 3 | 3.0 |
+| 10 | Singapore | 3 | 3.0 |
+| 11 | Switzerland | 3 | 3.0 |
+| 12 | Austria | 2 | 2.0 |
+| 13 | Finland | 2 | 2.0 |
+| 14 | Japan | 2 | 2.0 |
+| 15 | Spain | 2 | 2.0 |
+| 16 | Brazil | 1 | 1.0 |
+| 17 | China | 1 | 1.0 |
+| 18 | Denmark | 1 | 1.0 |
+| 19 | Ireland | 1 | 1.0 |
+| 20 | Italy | 1 | 1.0 |
+| 21 | Saudi Arabia | 1 | 1.0 |

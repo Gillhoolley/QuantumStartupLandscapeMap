@@ -1,14 +1,14 @@
-﻿# Coverage Quality Report
+# Coverage Quality Report
 
-Generated: 2026-03-20 17:52:47 -04:00
+Generated: 3/23/2026 13:16:00 America/New_York
 
-Total startups: **55**
+Total startups: **100**
 
 ## Missing Field Audit
 | field | missing_count | missing_pct |
 |---|---|---|
-| city | 0 | 0 |
-| country | 0 | 0 |
-| region | 0 | 0 |
-| website | 0 | 0 |
-| specialty | 0 | 0 |
+| city | 0 | 0.0% |
+| country | 0 | 0.0% |
+| region | 0 | 0.0% |
+| website | 0 | 0.0% |
+| specialty | 0 | 0.0% |
