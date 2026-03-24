@@ -136,19 +136,6 @@
       align-items: center;
       gap: 8px;
     }
-    .metro-actions button {
-      border: 1px solid rgba(255,255,255,0.22);
-      background: #11334b;
-      color: var(--text);
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 11px;
-      cursor: pointer;
-    }
-    .metro-actions button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
     .metro-selection {
       font-size: 11px;
       color: var(--muted);
@@ -167,15 +154,6 @@
       font-size: 11px;
       cursor: pointer;
       flex: 1;
-    }
-    .network-svg {
-      width: 100%;
-      height: 170px;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      background: linear-gradient(180deg, #0d2336 0%, #0a1b2b 100%);
-      margin-top: 6px;
-      display: block;
     }
     .legend {
       font-size: 12px;
@@ -217,11 +195,6 @@
         <select id="specialtyFilter">
           <option value="all">All Specialties</option>
         </select>
-      </div>
-
-      <div class="control">
-        <label for="searchInput">Search Startup</label>
-        <input id="searchInput" type="text" placeholder="Type company name" />
       </div>
 
       <div class="control">
@@ -278,13 +251,11 @@
       <div class="metro-map" id="metroMap"></div>
       <div class="metro-note" id="metroNote"></div>
       <div class="metro-actions">
-        <button id="clearMetroSelection" type="button" disabled>Clear Cluster Filter</button>
         <div class="metro-selection" id="metroSelectionState"></div>
       </div>
 
       <div class="section-title">Partnership Network</div>
       <div class="stats" id="partnershipCard"></div>
-      <svg class="network-svg" id="partnershipGraph" viewBox="0 0 280 170" role="img" aria-label="Partnership network graph"></svg>
 
       <div class="section-title">Data Quality</div>
       <div class="stats" id="qualityCard"></div>
@@ -516,7 +487,6 @@
 
     const regionFilter = document.getElementById('regionFilter');
     const specialtyFilter = document.getElementById('specialtyFilter');
-    const searchInput = document.getElementById('searchInput');
     const lifecycleFilter = document.getElementById('lifecycleFilter');
     const maturityFilter = document.getElementById('maturityFilter');
     const viewNameInput = document.getElementById('viewNameInput');
@@ -530,12 +500,10 @@
     const compareCountryB = document.getElementById('compareCountryB');
     const comparisonCard = document.getElementById('comparisonCard');
     const partnershipCard = document.getElementById('partnershipCard');
-    const partnershipGraph = document.getElementById('partnershipGraph');
     const qualityCard = document.getElementById('qualityCard');
     const metroHubSelect = document.getElementById('metroHubSelect');
     const metroMap = document.getElementById('metroMap');
     const metroNote = document.getElementById('metroNote');
-    const clearMetroSelection = document.getElementById('clearMetroSelection');
     const metroSelectionState = document.getElementById('metroSelectionState');
 
     const regions = [...new Set(STARTUPS.map(s => s.region))].sort();
@@ -755,12 +723,13 @@
     }
 
     function setCountryOptions(options) {
+      const sortedOptions = [...new Set(options)].sort((a, b) => a.localeCompare(b));
       const previousA = compareCountryA.value;
       const previousB = compareCountryB.value;
       compareCountryA.innerHTML = '';
       compareCountryB.innerHTML = '';
 
-      options.forEach(country => {
+      sortedOptions.forEach(country => {
         const aOpt = document.createElement('option');
         aOpt.value = country;
         aOpt.textContent = country;
@@ -772,11 +741,11 @@
         compareCountryB.appendChild(bOpt);
       });
 
-      if (!options.length) return;
+      if (!sortedOptions.length) return;
 
-      compareCountryA.value = options.includes(previousA) ? previousA : options[0];
-      const fallbackB = options[1] || options[0];
-      compareCountryB.value = options.includes(previousB) && previousB !== compareCountryA.value
+      compareCountryA.value = sortedOptions.includes(previousA) ? previousA : sortedOptions[0];
+      const fallbackB = sortedOptions[1] || sortedOptions[0];
+      compareCountryB.value = sortedOptions.includes(previousB) && previousB !== compareCountryA.value
         ? previousB
         : fallbackB;
     }
@@ -863,7 +832,6 @@
         specialty: specialtyFilter.value,
         lifecycle: lifecycleFilter.value,
         maturity: maturityFilter.value,
-        search: searchInput.value,
         drillDown: drillDownToggle.checked,
         metroHub: metroHubSelect.value,
         metroSelectionIds: ids.slice(0, 50),
@@ -880,7 +848,6 @@
       if (state.specialty) specialtyFilter.value = state.specialty;
       if (state.lifecycle) lifecycleFilter.value = state.lifecycle;
       if (state.maturity) maturityFilter.value = state.maturity;
-      if (typeof state.search === 'string') searchInput.value = state.search;
       if (typeof state.drillDown === 'boolean') drillDownToggle.checked = state.drillDown;
       if (state.metroHub && METRO_HUBS[state.metroHub]) metroHubSelect.value = state.metroHub;
       if (Array.isArray(state.metroSelectionIds) && state.metroSelectionIds.length) {
@@ -1009,7 +976,6 @@
 
     function updateMetroSelectionState() {
       const active = Boolean(metroSelectedStartupIds && metroSelectedStartupIds.size);
-      clearMetroSelection.disabled = !active;
       metroSelectionState.textContent = active
         ? `Cluster selected: ${metroSelectionLabel}.`
         : 'Tip: click a metro node/cluster to filter globe and sidebar.';
@@ -1153,7 +1119,6 @@
       const edges = partnershipEdges(data);
       if (!edges.length) {
         partnershipCard.innerHTML = '<small>No mapped partnerships in current scope.</small>';
-        partnershipGraph.innerHTML = '';
         return;
       }
 
@@ -1169,36 +1134,6 @@
         <b>Mapped edges:</b> ${edges.length}<br/>
         <b>Unique partners:</b> ${Object.keys(partnerCounts).length}<br/>
         <b>Top partners:</b> ${topPartners.map(([k, v]) => `${k} (${v})`).join(', ')}
-      `;
-
-      const topEdgeList = edges
-        .map(e => `${e.company}__${e.partner}`)
-        .reduce((acc, key) => {
-          acc[key] = (acc[key] || 0) + 1;
-          return acc;
-        }, {});
-      const topEdges = Object.entries(topEdgeList)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 6)
-        .map(([k]) => {
-          const [company, partner] = k.split('__');
-          return { company, partner };
-        });
-
-      const leftX = 20;
-      const rightX = 260;
-      const rowGap = 24;
-      const startY = 18;
-      const nodes = topEdges.map((e, i) => ({ ...e, y: startY + i * rowGap }));
-
-      const links = nodes.map(n => `<line x1="${leftX + 70}" y1="${n.y}" x2="${rightX - 70}" y2="${n.y}" stroke="rgba(0,194,168,0.45)" stroke-width="1.4"></line>`).join('');
-      const leftLabels = nodes.map(n => `<text x="${leftX}" y="${n.y + 4}" fill="#dfefff" font-size="10">${escapeHtml(n.company.slice(0, 18))}</text>`).join('');
-      const rightLabels = nodes.map(n => `<text x="${rightX - 68}" y="${n.y + 4}" fill="#9fe9ff" font-size="10">${escapeHtml(n.partner.slice(0, 18))}</text>`).join('');
-      partnershipGraph.innerHTML = `
-        <rect x="0" y="0" width="280" height="170" fill="transparent"></rect>
-        ${links}
-        ${leftLabels}
-        ${rightLabels}
       `;
     }
 
@@ -1331,7 +1266,6 @@
       const specialty = specialtyFilter.value;
       const lifecycle = lifecycleFilter.value;
       const maturity = maturityFilter.value;
-      const query = searchInput.value.trim().toLowerCase();
 
       const baseFiltered = STARTUPS.filter(s => {
         const lifecycleObj = lifecycleForStartup(s);
@@ -1340,8 +1274,7 @@
         const specialtyOk = specialty === 'all' || s.specialty.includes(specialty);
         const lifecycleOk = lifecycle === 'all' || lifecycleObj.status === lifecycle;
         const maturityOk = maturity === 'all' || maturityStage === maturity;
-        const searchOk = !query || s.name.toLowerCase().includes(query);
-        return regionOk && specialtyOk && lifecycleOk && maturityOk && searchOk;
+        return regionOk && specialtyOk && lifecycleOk && maturityOk;
       }).map(s => ({
         ...s,
         lifecycle: lifecycleForStartup(s),
@@ -1397,7 +1330,6 @@
     specialtyFilter.addEventListener('change', applyFilters);
     lifecycleFilter.addEventListener('change', applyFilters);
     maturityFilter.addEventListener('change', applyFilters);
-    searchInput.addEventListener('input', applyFilters);
     drillDownToggle.addEventListener('change', syncHoverState);
     compareCountryA.addEventListener('change', updateDrilldownPanels);
     compareCountryB.addEventListener('change', updateDrilldownPanels);
@@ -1405,10 +1337,6 @@
     copyLinkBtn.addEventListener('click', copyShareLink);
     savedViewsSelect.addEventListener('change', () => loadSavedViewById(savedViewsSelect.value));
     metroHubSelect.addEventListener('change', () => {
-      clearMetroSelectionState();
-      applyFilters();
-    });
-    clearMetroSelection.addEventListener('click', () => {
       clearMetroSelectionState();
       applyFilters();
     });
