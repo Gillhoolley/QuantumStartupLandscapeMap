@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>Software-Defined Quantum Signal</title>
+  <style>
+    :root{
+      --bg:#f6f1e8;
+      --panel:#fffdf9;
+      --ink:#152033;
+      --muted:#627085;
+      --line:#ddd3c2;
+      --hard:#d97a18;
+      --soft:#158f95;
+      --deep:#20408d;
+      --accent:#f0b44c;
+      --shadow:0 22px 50px rgba(21,32,51,.08);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Georgia,"Times New Roman",serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(217,122,24,.12), transparent 26%),
+        radial-gradient(circle at 85% 20%, rgba(21,143,149,.12), transparent 28%),
+        linear-gradient(180deg, #fbf7ef 0%, var(--bg) 100%);
+    }
+    .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 44px}
+    .hero{
+      background:linear-gradient(135deg, rgba(32,64,141,.98), rgba(21,143,149,.92));
+      color:#fff;
+      border-radius:30px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before,.hero:after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+    .hero:before{width:220px;height:220px;right:-50px;top:-40px}
+    .hero:after{width:150px;height:150px;left:-30px;bottom:-40px}
+    h1{margin:0;max-width:760px;font-size:46px;line-height:1.02}
+    .sub{margin-top:12px;max-width:760px;font-size:18px;line-height:1.45;color:rgba(255,255,255,.88)}
+    .hero-grid{
+      margin-top:24px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      position:relative;
+      z-index:1;
+    }
+    .stat{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.10);
+      border-radius:18px;
+      padding:14px 16px;
+      backdrop-filter:blur(10px);
+    }
+    .stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.7)}
+    .stat .v{margin-top:4px;font-size:31px;font-weight:700}
+    .layout{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+      margin-top:16px;
+    }
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    h2{margin:0 0 8px;font-size:24px}
+    .deck{margin:0 0 14px;color:var(--muted);font-size:15px;line-height:1.45}
+    .bars .row{
+      display:grid;
+      grid-template-columns:132px 1fr 60px;
+      gap:10px;
+      align-items:center;
+      margin:11px 0;
+    }
+    .label{font-size:14px}
+    .track{
+      height:16px;
+      border-radius:999px;
+      background:#eee7da;
+      border:1px solid #e0d5c1;
+      overflow:hidden;
+    }
+    .fill{height:100%;border-radius:999px}
+    .fill.hardware{background:linear-gradient(90deg,var(--hard),#efac62)}
+    .fill.software{background:linear-gradient(90deg,var(--soft),#57c2bf)}
+    .fill.other{background:linear-gradient(90deg,var(--deep),#6f8ed6)}
+    .num{text-align:right;font-size:14px;font-weight:700}
+    .signal-shell{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      align-items:center;
+      margin-top:10px;
+    }
+    .paired-signal{
+      display:grid;
+      gap:12px;
+    }
+    .pillar{
+      border-radius:18px;
+      padding:16px;
+      border:1px solid #e5dbc9;
+      background:#faf6ef;
+    }
+    .pillar.hardware{
+      background:linear-gradient(180deg, rgba(217,122,24,.12), rgba(255,253,249,1));
+      border-color:rgba(217,122,24,.28);
+    }
+    .pillar.software{
+      background:linear-gradient(180deg, rgba(21,143,149,.12), rgba(255,253,249,1));
+      border-color:rgba(21,143,149,.28);
+    }
+    .pillar .pk{
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .pillar .pv{
+      margin-top:6px;
+      font-size:40px;
+      font-weight:700;
+      line-height:1;
+    }
+    .pillar .pt{
+      margin-top:8px;
+      font-size:15px;
+      line-height:1.4;
+      color:var(--ink);
+    }
+    .bridge{
+      border-radius:18px;
+      padding:14px;
+      background:linear-gradient(135deg, rgba(32,64,141,.10), rgba(240,180,76,.12));
+      border:1px solid rgba(32,64,141,.18);
+    }
+    .bridge .bk{
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--deep);
+    }
+    .bridge .bv{
+      margin-top:6px;
+      font-size:24px;
+      font-weight:700;
+      color:var(--deep);
+    }
+    .bridge p{
+      margin:6px 0 0;
+      font-size:13px;
+      line-height:1.42;
+      color:var(--muted);
+    }
+    .signal-list{display:grid;gap:10px}
+    .signal{
+      border-left:4px solid var(--accent);
+      background:#fff8ec;
+      border-radius:14px;
+      padding:12px 12px 12px 14px;
+    }
+    .signal h3{margin:0 0 4px;font-size:16px}
+    .signal p{margin:0;color:var(--muted);font-size:13px;line-height:1.42}
+    .region-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:8px;
+    }
+    .region{
+      border:1px solid #e6dccb;
+      border-radius:16px;
+      background:#faf6ee;
+      padding:12px;
+    }
+    .region .rk{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+    .region .rv{margin-top:4px;font-size:28px;font-weight:700}
+    .region p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.42}
+    .footer-note{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+    @media (max-width:980px){
+      .hero-grid,.region-grid{grid-template-columns:repeat(2,1fr)}
+      .layout{grid-template-columns:1fr}
+      h1{font-size:38px}
+    }
+    @media (max-width:640px){
+      .hero-grid,.region-grid,.signal-shell{grid-template-columns:1fr}
+      .bars .row{grid-template-columns:100px 1fr 46px}
+      h1{font-size:30px}
+      .sub{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <div class='wrap'>
+    <section class='hero'>
+      <h1>Software Is Not Peripheral in Quantum. It Is Structurally Central.</h1>
+      <div class='sub'>The specialty mix data shows a market still led by hardware, but no longer defined by hardware alone. Software now appears in 55% of the top 100 startups, a strong signal that quantum is becoming a software-defined systems race.</div>
+      <div class='hero-grid'>
+        <div class='stat'><div class='k'>Dataset</div><div class='v'>100</div></div>
+        <div class='stat'><div class='k'>Hardware Presence</div><div class='v'>65%</div></div>
+        <div class='stat'><div class='k'>Software Presence</div><div class='v'>55%</div></div>
+        <div class='stat'><div class='k'>Gap</div><div class='v'>10 pts</div></div>
+      </div>
+    </section>
+
+    <section class='layout'>
+      <div class='card'>
+        <h2>Overall Specialty Presence</h2>
+        <p class='deck'>Multi-tag counts show that software sits much closer to hardware than a pure device narrative would suggest.</p>
+        <div class='bars'>
+          <div class='row'><div class='label'>hardware</div><div class='track'><div class='fill hardware' style='width:100%'></div></div><div class='num'>65</div></div>
+          <div class='row'><div class='label'>software</div><div class='track'><div class='fill software' style='width:84.6%'></div></div><div class='num'>55</div></div>
+          <div class='row'><div class='label'>cryptography</div><div class='track'><div class='fill other' style='width:27.7%'></div></div><div class='num'>18</div></div>
+          <div class='row'><div class='label'>materials</div><div class='track'><div class='fill other' style='width:15.4%'></div></div><div class='num'>10</div></div>
+          <div class='row'><div class='label'>sensing</div><div class='track'><div class='fill other' style='width:13.8%'></div></div><div class='num'>9</div></div>
+        </div>
+        <div class='footer-note'>Source: [analysis/specialty_mix_report.md]. A startup can appear in more than one category, which is exactly why the software signal matters: it appears across the stack, not only in software-only firms.</div>
+      </div>
+
+      <div class='card'>
+        <h2>What the Signal Means</h2>
+        <p class='deck'>The market is not shifting from hardware to software. It is shifting from hardware-only narratives toward integrated, software-defined quantum systems.</p>
+        <div class='signal-shell'>
+          <div class='paired-signal'>
+            <div class='pillar hardware'>
+              <div class='pk'>Hardware Signal</div>
+              <div class='pv'>65%</div>
+              <div class='pt'>Hardware still anchors the category. The sector is not moving away from physics or devices.</div>
+            </div>
+            <div class='pillar software'>
+              <div class='pk'>Software Signal</div>
+              <div class='pv'>55%</div>
+              <div class='pt'>Software now appears often enough to shape usability, orchestration, workflow fit, and product defensibility.</div>
+            </div>
+            <div class='bridge'>
+              <div class='bk'>Clear Read</div>
+              <div class='bv'>Not a hardware-only market</div>
+              <p>The 10-point spread is narrow. This does not show a literal overlap count. It shows that software has become a parallel core capability across the top 100 startups.</p>
+            </div>
+          </div>
+          <div class='signal-list'>
+            <div class='signal'><h3>Software has crossed from support layer to core layer</h3><p>At 55% presence, software is too common to be treated as an accessory capability. It is now part of how quantum companies compete.</p></div>
+            <div class='signal'><h3>The gap is narrower than expected</h3><p>Hardware leads software by only 10 percentage points, which implies the ecosystem is much more integrated than a hardware-first storyline suggests.</p></div>
+            <div class='signal'><h3>Defensibility is moving up and down the stack</h3><p>Compilers, orchestration, control systems, mitigation, and workflow software increasingly shape who can translate hardware into utility.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class='layout'>
+      <div class='card'>
+        <h2>Primary Specialty Still Leans Hardware</h2>
+        <p class='deck'>When only the first-listed specialty is counted, hardware dominates more clearly. That makes the 55% multi-tag software presence even more important.</p>
+        <div class='bars'>
+          <div class='row'><div class='label'>hardware</div><div class='track'><div class='fill hardware' style='width:100%'></div></div><div class='num'>54</div></div>
+          <div class='row'><div class='label'>software</div><div class='track'><div class='fill software' style='width:44.4%'></div></div><div class='num'>24</div></div>
+          <div class='row'><div class='label'>cryptography</div><div class='track'><div class='fill other' style='width:27.8%'></div></div><div class='num'>15</div></div>
+          <div class='row'><div class='label'>sensing</div><div class='track'><div class='fill other' style='width:13%'></div></div><div class='num'>7</div></div>
+        </div>
+        <div class='footer-note'>Interpretation: many companies still introduce themselves through hardware, but a large share also require software to define product value, usability, or defensibility.</div>
+      </div>
+
+      <div class='card'>
+        <h2>Regional Proof That Software Is Structural</h2>
+        <p class='deck'>Software presence is not isolated to one geography. It appears across major startup regions and even overtakes hardware in some smaller ecosystems.</p>
+        <div class='region-grid'>
+          <div class='region'><div class='rk'>North America</div><div class='rv'>59.5%</div><p>Software appears in 22 of 37 startups, close to hardware's 67.6%.</p></div>
+          <div class='region'><div class='rk'>Europe</div><div class='rv'>51.2%</div><p>Software is present in 21 of 41 startups, confirming full-stack depth across the region.</p></div>
+          <div class='region'><div class='rk'>Asia-Pacific</div><div class='rv'>77.8%</div><p>Software exceeds hardware in the region's startup mix, a strong systems-level signal.</p></div>
+          <div class='region'><div class='rk'>Middle East</div><div class='rv'>66.7%</div><p>Software also exceeds hardware here, reinforcing the rise of software-centric differentiation.</p></div>
+        </div>
+        <div class='footer-note'>Claim supported by the data: quantum is moving away from pure hardware narratives toward software-defined quantum systems, where software is essential to control, usability, and commercialization.</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
