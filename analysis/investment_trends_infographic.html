@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>Quantum Startup Investment Trends</title>
+  <style>
+    :root{
+      --bg:#f4f6fb;
+      --panel:#ffffff;
+      --ink:#102038;
+      --muted:#5d6b80;
+      --line:#d9e0ec;
+      --navy:#21409a;
+      --cyan:#1ea7b6;
+      --gold:#f0b44c;
+      --rose:#d95b7a;
+      --shadow:0 18px 48px rgba(16,32,56,.08);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Georgia,"Times New Roman",serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(30,167,182,.12), transparent 26%),
+        radial-gradient(circle at top right, rgba(240,180,76,.12), transparent 24%),
+        linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
+    }
+    .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 44px}
+    .hero{
+      background:linear-gradient(135deg, rgba(33,64,154,.98), rgba(30,167,182,.92));
+      color:#fff;
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      right:-40px;top:-30px;
+      width:220px;height:220px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+    h1{margin:0;font-size:44px;line-height:1.02;max-width:760px}
+    .sub{margin-top:10px;max-width:760px;font-size:18px;line-height:1.45;color:rgba(255,255,255,.88)}
+    .hero-grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      position:relative;
+      z-index:1;
+    }
+    .stat{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:18px;
+      padding:14px 16px;
+      backdrop-filter:blur(8px);
+    }
+    .stat .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+    .stat .v{margin-top:4px;font-size:30px;font-weight:700}
+    .layout{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+      margin-top:16px;
+    }
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    h2{margin:0 0 8px;font-size:24px}
+    .deck{margin:0 0 14px;color:var(--muted);font-size:15px;line-height:1.45}
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:8px;
+    }
+    .coverage{
+      border-radius:18px;
+      padding:16px;
+      background:#f8fbff;
+      border:1px solid #dbe7f5;
+    }
+    .coverage .ck{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+    .coverage .cv{margin-top:8px;font-size:42px;font-weight:700}
+    .coverage p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.42}
+    .coverage.disclosed{background:linear-gradient(180deg, rgba(30,167,182,.10), #f8fbff)}
+    .coverage.undisclosed{background:linear-gradient(180deg, rgba(217,91,122,.08), #fffafb)}
+    .bars .row{
+      display:grid;
+      grid-template-columns:200px 1fr 82px;
+      gap:10px;
+      align-items:center;
+      margin:10px 0;
+    }
+    .label{font-size:14px}
+    .track{
+      height:14px;
+      border-radius:999px;
+      background:#edf2fa;
+      border:1px solid #dbe4f0;
+      overflow:hidden;
+    }
+    .fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--navy), var(--cyan));
+    }
+    .num{text-align:right;font-size:14px;font-weight:700}
+    .callouts{
+      display:grid;
+      gap:10px;
+      margin-top:8px;
+    }
+    .callout{
+      border-left:4px solid var(--gold);
+      background:#fff9ee;
+      border-radius:14px;
+      padding:12px 12px 12px 14px;
+    }
+    .callout h3{margin:0 0 4px;font-size:16px}
+    .callout p{margin:0;color:var(--muted);font-size:13px;line-height:1.42}
+    .rank-grid{
+      display:grid;
+      gap:10px;
+    }
+    .rank{
+      display:grid;
+      grid-template-columns:44px 1fr auto;
+      gap:12px;
+      align-items:center;
+      border:1px solid #e1e8f3;
+      border-radius:16px;
+      padding:12px;
+      background:linear-gradient(180deg,#ffffff,#f8fbff);
+    }
+    .badge{
+      width:44px;height:44px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;font-weight:700;color:#fff;
+      background:linear-gradient(135deg,var(--navy),var(--cyan));
+    }
+    .rank .name{font-size:16px;font-weight:700}
+    .rank .meta{margin-top:2px;font-size:12px;color:var(--muted)}
+    .rank .amt{font-size:18px;font-weight:700;color:var(--navy)}
+    .footer-note{
+      margin-top:14px;
+      font-size:13px;
+      line-height:1.45;
+      color:var(--muted);
+    }
+    @media (max-width:980px){
+      .hero-grid,.split{grid-template-columns:repeat(2,1fr)}
+      .layout{grid-template-columns:1fr}
+      h1{font-size:36px}
+    }
+    @media (max-width:640px){
+      .hero-grid,.split{grid-template-columns:1fr}
+      .bars .row{grid-template-columns:120px 1fr 62px}
+      .rank{grid-template-columns:36px 1fr auto;gap:10px}
+      .badge{width:36px;height:36px;border-radius:12px;font-size:15px}
+      h1{font-size:30px}
+      .sub{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <div class='wrap'>
+    <section class='hero'>
+      <h1>Quantum Startup Investment Trends</h1>
+      <div class='sub'>A directional view of disclosed funding across the top 100 quantum startups. The biggest signal is not only who raised the most, but how incomplete funding visibility still shapes the market narrative.</div>
+      <div class='hero-grid'>
+        <div class='stat'><div class='k'>Total Startups</div><div class='v'>100</div></div>
+        <div class='stat'><div class='k'>Disclosed Funding</div><div class='v'>45</div></div>
+        <div class='stat'><div class='k'>Coverage</div><div class='v'>45%</div></div>
+        <div class='stat'><div class='k'>Top Disclosed</div><div class='v'>$578.4m</div></div>
+      </div>
+    </section>
+
+    <section class='layout'>
+      <div class='card'>
+        <h2>Coverage Shapes the Read</h2>
+        <p class='deck'>This report is useful because it shows where capital is visibly concentrating. It is limited because more than half the dataset has no disclosed total funding amount.</p>
+        <div class='split'>
+          <div class='coverage disclosed'>
+            <div class='ck'>Disclosed</div>
+            <div class='cv'>45%</div>
+            <p>Forty-five startups in the top 100 have a disclosed funding amount in the current dataset.</p>
+          </div>
+          <div class='coverage undisclosed'>
+            <div class='ck'>Undisclosed</div>
+            <div class='cv'>55%</div>
+            <p>Fifty-five startups have no disclosed total in the current source fields, so the ranking is directional rather than exhaustive.</p>
+          </div>
+        </div>
+        <h2 style='margin-top:18px'>Top Funded, Disclosed</h2>
+        <p class='deck'>The top of the disclosed ranking skews toward full-stack, software, and platform-oriented companies, not only pure device builders.</p>
+        <div class='bars'>
+          <div class='row'><div class='label'>IQM</div><div class='track'><div class='fill' style='width:100%'></div></div><div class='num'>$578m</div></div>
+          <div class='row'><div class='label'>InfiniQuant</div><div class='track'><div class='fill' style='width:43.1%'></div></div><div class='num'>$249m</div></div>
+          <div class='row'><div class='label'>Ostendo Tech.</div><div class='track'><div class='fill' style='width:34.4%'></div></div><div class='num'>$199m</div></div>
+          <div class='row'><div class='label'>D-Wave Systems</div><div class='track'><div class='fill' style='width:32.1%'></div></div><div class='num'>$186m</div></div>
+          <div class='row'><div class='label'>Zapata Comp.</div><div class='track'><div class='fill' style='width:18.6%'></div></div><div class='num'>$108m</div></div>
+          <div class='row'><div class='label'>Cambridge QC</div><div class='track'><div class='fill' style='width:12.6%'></div></div><div class='num'>$73m</div></div>
+          <div class='row'><div class='label'>PhaseCraft</div><div class='track'><div class='fill' style='width:11.5%'></div></div><div class='num'>$67m</div></div>
+          <div class='row'><div class='label'>Optalysys</div><div class='track'><div class='fill' style='width:11.0%'></div></div><div class='num'>$64m</div></div>
+          <div class='row'><div class='label'>QC Ware</div><div class='track'><div class='fill' style='width:10.8%'></div></div><div class='num'>$63m</div></div>
+          <div class='row'><div class='label'>ColdQuanta Inc</div><div class='track'><div class='fill' style='width:10.7%'></div></div><div class='num'>$62m</div></div>
+        </div>
+        <div class='footer-note'>Source: [analysis/investment_trends.md]. Funding amounts are rounded in the visual for readability.</div>
+      </div>
+
+      <div class='card'>
+        <h2>Key Investment Signals</h2>
+        <div class='rank-grid'>
+          <div class='rank'>
+            <div class='badge'>1</div>
+            <div><div class='name'>IQM</div><div class='meta'>Largest disclosed total in the dataset</div></div>
+            <div class='amt'>$578.4m</div>
+          </div>
+          <div class='rank'>
+            <div class='badge'>2</div>
+            <div><div class='name'>InfiniQuant</div><div class='meta'>Second-largest disclosed total</div></div>
+            <div class='amt'>$249.3m</div>
+          </div>
+          <div class='rank'>
+            <div class='badge'>3</div>
+            <div><div class='name'>Ostendo Technologies</div><div class='meta'>Software-led name high in the ranking</div></div>
+            <div class='amt'>$198.7m</div>
+          </div>
+          <div class='rank'>
+            <div class='badge'>4</div>
+            <div><div class='name'>D-Wave Systems</div><div class='meta'>Hybrid platform visibility remains strong</div></div>
+            <div class='amt'>$185.7m</div>
+          </div>
+        </div>
+        <div class='callouts'>
+          <div class='callout'><h3>Visibility gap is a market signal</h3><p>With only 45% coverage, the dataset suggests the quantum capital map is still opaque. That makes disclosed leaders more visible, but also means stealth and underreported companies may be missing from the top tier.</p></div>
+          <div class='callout'><h3>Funding is not purely hardware-led</h3><p>The disclosed leaderboard includes software and full-stack names, supporting the view that investors are backing system-layer value, not just device development.</p></div>
+          <div class='callout'><h3>Current trend read: directional, not final</h3><p>The dataset lacks round timing and many totals, so this infographic is best used to identify concentration and market visibility rather than precise sector-wide capital rankings.</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

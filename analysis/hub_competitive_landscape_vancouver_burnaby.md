@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 65 km radius around 49.265, -123.05
 
 Total startups: **4**
+Disclosed funding total: **$405.6m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -13,6 +14,9 @@ Total startups: **4**
 | D-Wave Quantum | Burnaby | Canada | hardware, software | $185.7m | revenue-stage |
 | D-Wave Systems | Burnaby | Canada | hardware, software | $185.7m | revenue-stage |
 | Photonic | Vancouver | Canada | hardware | Undisclosed | research |
+
+## Company Roster
+- 1QBit, D-Wave Quantum, D-Wave Systems, Photonic
 
 ## Specialty Mix
 | specialty | count | share_pct |

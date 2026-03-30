@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 130 km radius around 48.8566, 2.3522
 
 Total startups: **4**
+Disclosed funding total: **$295.1m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -13,6 +14,9 @@ Total startups: **4**
 | C12 Quantum Electronics | Paris | France | hardware, materials | Undisclosed | research |
 | Pasqal | Paris | France | hardware, software | $140.5m | production |
 | Quandela | Massy | France | hardware, software | $88.0m | pilot |
+
+## Company Roster
+- Alice & Bob, C12 Quantum Electronics, Pasqal, Quandela
 
 ## Specialty Mix
 | specialty | count | share_pct |

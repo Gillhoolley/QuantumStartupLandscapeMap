@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 120 km radius around 42.3601, -71.0589
 
 Total startups: **4**
+Disclosed funding total: **$142.3m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -13,6 +14,9 @@ Total startups: **4**
 | QuEra | Somerville, Massachusetts | United States | hardware | $17.0m | research |
 | QuEra Computing | Boston | United States | hardware, software | Undisclosed | pilot |
 | Zapata Computing | Boston | United States | software | $107.6m | pilot |
+
+## Company Roster
+- Aliro Quantum, QuEra, QuEra Computing, Zapata Computing
 
 ## Specialty Mix
 | specialty | count | share_pct |

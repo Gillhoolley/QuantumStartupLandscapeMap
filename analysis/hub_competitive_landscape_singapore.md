@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 75 km radius around 1.3521, 103.8198
 
 Total startups: **3**
+Disclosed funding total: **$5.1m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -12,6 +13,9 @@ Total startups: **3**
 | Horizon Quantum | Singapore | Singapore | software | Undisclosed | pilot |
 | Horizon Quantum Computing | Singapore | Singapore | software | $3.2m | pilot |
 | SpeQtral | Singapore | Singapore | cryptography, hardware | $1.9m | research |
+
+## Company Roster
+- Horizon Quantum, Horizon Quantum Computing, SpeQtral
 
 ## Specialty Mix
 | specialty | count | share_pct |

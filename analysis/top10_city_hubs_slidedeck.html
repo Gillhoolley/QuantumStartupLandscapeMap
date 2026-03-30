@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top 10 Quantum City Hubs Slide Deck</title>
+<style>
+  :root{
+    --bg:#f3efe6;
+    --ink:#18222f;
+    --muted:#5d6875;
+    --panel:#fffaf2;
+    --line:#d8cfbf;
+    --accent:#0c6d7b;
+    --accent-2:#d68a2f;
+    --accent-3:#264653;
+    --soft:#e4f1f4;
+    --pilot:#f2a65a;
+    --research:#7b8ea3;
+    --production:#2a9d8f;
+    --revenue:#174e78;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:linear-gradient(180deg,#ece7dd 0%,#f7f4ed 100%);color:var(--ink);font-family:"Aptos","Trebuchet MS","Segoe UI",sans-serif}
+  body{min-height:100vh}
+  .app{max-width:1440px;margin:0 auto;padding:18px 20px 28px}
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}
+  .brand{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:10px 14px;border-radius:999px;font:inherit;cursor:pointer}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .counter{font-size:14px;color:var(--muted);min-width:82px;text-align:center}
+  .deck{position:relative}
+  .slide{display:none;min-height:790px;background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:34px 34px 28px;box-shadow:0 16px 40px rgba(38,70,83,.08);overflow:hidden}
+  .slide.active{display:block}
+  .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  h1,h2,h3{margin:0}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:58px;line-height:1.04;max-width:900px}
+  h2{font-family:Georgia,"Times New Roman",serif;font-size:42px;line-height:1.08;margin-top:8px}
+  h3{font-size:18px;letter-spacing:.02em}
+  .lede{margin-top:18px;max-width:840px;font-size:22px;line-height:1.45;color:#263240}
+  .meta{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+  .chip{padding:9px 12px;border-radius:999px;background:#f2ece0;border:1px solid var(--line);font-size:13px;color:var(--muted)}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:22px;margin-top:26px}
+  .panel{background:rgba(255,255,255,.62);border:1px solid var(--line);border-radius:22px;padding:20px}
+  .panel p{margin:10px 0 0;font-size:16px;line-height:1.55;color:#2e3945}
+  .signal-list{margin:12px 0 0;padding-left:18px;font-size:17px;line-height:1.55}
+  .signal-list li{margin:8px 0}
+  .city-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:18px}
+  .city-card{padding:14px;border-radius:18px;background:#fff;border:1px solid var(--line)}
+  .city-card .rank{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .city-card .city{margin-top:6px;font-size:22px;font-weight:700}
+  .city-card .mini{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.5}
+  .city-card .money{margin-top:10px;color:var(--accent-3);font-size:18px;font-weight:700}
+  .compare-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:15px}
+  .compare-table th,.compare-table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .compare-table th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .compare-table .city-name{font-weight:700}
+  .compare-table .soft{color:var(--muted)}
+  .layout{display:grid;grid-template-columns:1.2fr .95fr;gap:20px;margin-top:22px}
+  .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .metric{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 14px}
+  .metric .k{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .metric .v{margin-top:8px;font-size:30px;font-weight:700;line-height:1.05}
+  .section{margin-top:14px}
+  .section .copy{margin-top:8px;font-size:16px;line-height:1.6;color:#2e3945}
+  .bars{display:grid;gap:10px;margin-top:14px}
+  .bar-row{display:grid;grid-template-columns:120px 1fr 44px;gap:10px;align-items:center}
+  .bar-row .label{font-size:14px}
+  .track{height:12px;border-radius:999px;background:#ece6d8;overflow:hidden}
+  .fill{height:100%;border-radius:999px}
+  .mixes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .maturity{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .badge{padding:8px 10px;border-radius:999px;font-size:13px;border:1px solid transparent}
+  .badge.pilot{background:rgba(242,166,90,.15);color:#915212;border-color:rgba(242,166,90,.35)}
+  .badge.research{background:rgba(123,142,163,.14);color:#425264;border-color:rgba(123,142,163,.28)}
+  .badge.production{background:rgba(42,157,143,.12);color:#19685e;border-color:rgba(42,157,143,.28)}
+  .badge.revenue-stage{background:rgba(23,78,120,.12);color:#174e78;border-color:rgba(23,78,120,.28)}
+  .roster{margin:12px 0 0;padding-left:18px;columns:2;column-gap:22px}
+  .roster li{margin:0 0 8px;line-height:1.35}
+  .foot{position:absolute;right:34px;bottom:22px;font-size:12px;color:var(--muted)}
+  .note{margin-top:14px;padding:12px 14px;border-radius:16px;background:var(--soft);font-size:14px;line-height:1.55;color:#29404a}
+  @media (max-width:1100px){
+    .slide{min-height:auto}
+    .hero-grid,.layout,.mixes{grid-template-columns:1fr}
+    .metrics{grid-template-columns:1fr 1fr}
+    .city-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:700px){
+    .app{padding:10px}
+    .slide{padding:22px 18px 52px;border-radius:20px}
+    h1{font-size:38px}
+    h2{font-size:30px}
+    .lede{font-size:18px}
+    .metrics{grid-template-columns:1fr}
+    .city-grid{grid-template-columns:1fr}
+    .compare-table{font-size:13px}
+    .bar-row{grid-template-columns:100px 1fr 34px}
+    .roster{columns:1}
+    .foot{left:18px;right:auto;bottom:18px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">Quantum Startup Landscape Map</div>
+    <div class="controls">
+      <button class="btn" id="prevBtn" type="button">Previous</button>
+      <div class="counter" id="counter">1 / 12</div>
+      <button class="btn" id="nextBtn" type="button">Next</button>
+    </div>
+  </div>
+  <div class="deck" id="deck"></div>
+</div>
+<script>
+const slides = [
+  {
+    type: "cover",
+    eyebrow: "Slide Deck",
+    title: "Top 10 Quantum City Hubs",
+    lede: "A slide-by-slide snapshot of the ten metro clusters with the strongest direct startup density in the dataset, showing where quantum innovation is concentrated, how mature each hub looks, which companies define the cluster, and how much disclosed capital sits inside each city picture.",
+    meta: [
+      "Source set: top 100 quantum startups",
+      "Format: 1 overview + 1 comparison + 10 city snapshots",
+      "Date: March 30, 2026"
+    ],
+    panels: [
+      {
+        title: "What the deck is measuring",
+        bullets: [
+          "Direct city count versus widened hub total",
+          "Disclosed funding total inside each hub report",
+          "Specialty mix across hardware, software, cryptography, sensing, and materials",
+          "Maturity mix across research, pilot, production, and revenue-stage startups"
+        ]
+      },
+      {
+        title: "Why cities matter more than countries",
+        text: "Country counts flatten the real operating environment. Quantum startups cluster around specific metros where talent, labs, capital, cloud access, and commercialization partners are dense enough to shorten the path from research to product."
+      }
+    ],
+    cards: [
+      { rank: "1", city: "London", mini: "5 direct | 13 hub", money: "$579.1m disclosed" },
+      { rank: "2", city: "Tel Aviv", mini: "5 direct | 5 hub", money: "$230.5m disclosed" },
+      { rank: "3", city: "Cambridge", mini: "4 direct | 10 hub", money: "$360.0m disclosed" },
+      { rank: "4", city: "Boston", mini: "3 direct | 4 hub", money: "$142.3m disclosed" },
+      { rank: "5", city: "Bristol", mini: "3 direct | 3 hub", money: "$75.5m disclosed" },
+      { rank: "6", city: "Kansas", mini: "3 direct | 3 hub", money: "$161.8m disclosed" },
+      { rank: "7", city: "Paris", mini: "3 direct | 4 hub", money: "$295.1m disclosed" },
+      { rank: "8", city: "San Francisco Bay", mini: "3 direct | 7 hub", money: "$864.6m disclosed" },
+      { rank: "9", city: "Singapore", mini: "3 direct | 3 hub", money: "$5.1m disclosed" },
+      { rank: "10", city: "Sydney", mini: "3 direct | 3 hub", money: "$183.4m disclosed" }
+    ]
+  },
+  {
+    type: "comparison",
+    eyebrow: "Comparison",
+    title: "How the top 10 hubs separate",
+    rows: [
+      ["London","5","13","$579.1m","Broad UK corridor","Quantinuum, Riverlane, OQC, PhaseCraft"],
+      ["Tel Aviv","5","5","$230.5m","Compact software-control cluster","Classiq, Qedma, Quantum Machines"],
+      ["Cambridge (UK)","4","10","$360.0m","Full-stack infrastructure corridor","Quantinuum, Riverlane, Nu Quantum"],
+      ["Boston","3","4","$142.3m","Neutral-atom plus enterprise software","QuEra, Zapata, Aliro"],
+      ["Bristol","3","3","$75.5m","Specialized sensing-security niche","Phasecraft, KETS, Qlm"],
+      ["Kansas","3","3","$161.8m","Balanced software-sensing-crypto mix","QC Ware, ColdQuanta, Quantum Xchange"],
+      ["Paris","3","4","$295.1m","Hardware-led architecture cluster","Pasqal, Quandela, Alice & Bob"],
+      ["San Francisco Bay","3","7","$864.6m","Capital-rich software-platform corridor","Rigetti, SandboxAQ, PsiQuantum"],
+      ["Singapore","3","3","$5.1m","Compact software-communications node","Horizon Quantum, SpeQtral"],
+      ["Sydney","3","3","$183.4m","Research-heavy hardware-control hub","Q-CTRL, Diraq, SQC"]
+    ],
+    note: "The strongest hubs are not always the biggest by direct city count. London, Cambridge, and San Francisco become materially more important when widened into nearby corridors, while Tel Aviv, Singapore, Sydney, Bristol, and Kansas remain compact but locally concentrated."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 1",
+    title: "London",
+    subtitle: "Broad UK corridor with mixed maturity and full-stack depth",
+    metrics: ["5 direct city count","13 hub total","$579.1m disclosed","84.6% funding coverage"],
+    specialties: [["hardware",9],["software",7],["cryptography",5],["materials",1]],
+    maxSpecialty: 9,
+    maturity: ["pilot: 7","research: 4","production: 1","revenue-stage: 1"],
+    companies: ["Cambridge Quantum Computing","Crypta Labs","Crypto Quantique","Nu Quantum","ORCA Computing","Oxford Quantum Circuits","PhaseCraft","Post-Quantum","Pqshield Ltd","Quantinuum","Quantum Motion","Riverlane","Universal Quantum"],
+    insight: "London behaves less like a single city and more like the operating center of a UK quantum corridor linking London, Cambridge, Oxford, Reading, and Brighton. It is one of the few hubs in the dataset that spans hardware, software, cryptography, and multiple commercialization stages at once."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 2",
+    title: "Tel Aviv",
+    subtitle: "Compact metro cluster with strong software and control-stack concentration",
+    metrics: ["5 direct city count","5 hub total","$230.5m disclosed","40.0% funding coverage"],
+    specialties: [["software",4],["hardware",3]],
+    maxSpecialty: 4,
+    maturity: ["pilot: 4","research: 1"],
+    companies: ["Classiq","LightSolver","Qedma","Quantum Machines","Quantum Source"],
+    insight: "Tel Aviv is the clearest example of density without corridor sprawl. The cluster is concentrated inside the metro itself, and its center of gravity sits in software, orchestration, and control infrastructure rather than a single dominant hardware bet."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 3",
+    title: "Cambridge (UK)",
+    subtitle: "Full-stack infrastructure node inside the wider UK quantum corridor",
+    metrics: ["4 direct city count","10 hub total","$360.0m disclosed","90.0% funding coverage"],
+    specialties: [["hardware",7],["software",7],["cryptography",4],["materials",1]],
+    maxSpecialty: 7,
+    maturity: ["pilot: 6","research: 3","revenue-stage: 1"],
+    companies: ["Cambridge Quantum Computing","Crypta Labs","Crypto Quantique","Nu Quantum","ORCA Computing","PhaseCraft","Post-Quantum","Quantinuum","Quantum Motion","Riverlane"],
+    insight: "Cambridge is one of the strongest full-stack signatures in the dataset. Hardware and software appear at equal intensity, with cryptography and infrastructure layers stacked around core compute players, making the hub especially attractive to investors looking for platform depth rather than a single modality story."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 4",
+    title: "Boston",
+    subtitle: "Neutral-atom and enterprise-software hub with a pilot-heavy mix",
+    metrics: ["3 direct city count","4 hub total","$142.3m disclosed","75.0% funding coverage"],
+    specialties: [["hardware",3],["software",3]],
+    maxSpecialty: 3,
+    maturity: ["pilot: 3","research: 1"],
+    companies: ["Aliro Quantum","QuEra","QuEra Computing","Zapata Computing"],
+    insight: "Boston is smaller than the leading corridors, but the signal is strategically clean. The cluster ties neutral-atom hardware to workflow and enterprise access layers, which gives it a sharper commercialization profile than a pure research hub of the same size."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 5",
+    title: "Bristol",
+    subtitle: "Small specialized hub focused on software, sensing, and security",
+    metrics: ["3 direct city count","3 hub total","$75.5m disclosed","100.0% funding coverage"],
+    specialties: [["software",2],["cryptography",1],["hardware",1],["materials",1],["sensing",1]],
+    maxSpecialty: 2,
+    maturity: ["pilot: 2","research: 1"],
+    companies: ["KETS Quantum Security","Phasecraft","Qlm Technology Ltd"],
+    insight: "Bristol stands out less for scale than for specificity. Its startup set spans quantum software, sensing, and security in a tight cluster, showing how a small city can still matter if it owns a well-defined technical niche."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 6",
+    title: "Kansas",
+    subtitle: "Compact but unusually balanced mix across software, sensing, and crypto",
+    metrics: ["3 direct city count","3 hub total","$161.8m disclosed","100.0% funding coverage"],
+    specialties: [["cryptography",1],["hardware",1],["sensing",1],["software",1]],
+    maxSpecialty: 1,
+    maturity: ["pilot: 2","research: 1"],
+    companies: ["ColdQuanta Inc","QC Ware Corp.","Quantum Xchange"],
+    insight: "Kansas is one of the more surprising entries in the top 10 because it is not deep in one vertical. Instead, it shows a balanced spread across software, sensing, hardware, and cryptography, which makes it look like a small multipolar hub rather than a single-theme cluster."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 7",
+    title: "Paris",
+    subtitle: "Hardware-led cluster spanning neutral atoms, photonics, and fault-tolerant ambition",
+    metrics: ["3 direct city count","4 hub total","$295.1m disclosed","75.0% funding coverage"],
+    specialties: [["hardware",4],["software",2],["materials",1]],
+    maxSpecialty: 4,
+    maturity: ["research: 2","pilot: 1","production: 1"],
+    companies: ["Alice & Bob","C12 Quantum Electronics","Pasqal","Quandela"],
+    insight: "Paris is one of the most technically concentrated hardware hubs in the set. The cluster covers several architectures at once, and it combines deeper compute ambition with one of the clearer production-stage signals among the top 10 cities."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 8",
+    title: "San Francisco Bay",
+    subtitle: "Capital-rich corridor with software, platform, and large-funding gravity",
+    metrics: ["3 direct city count","7 hub total","$864.6m disclosed","100.0% funding coverage"],
+    specialties: [["software",5],["hardware",3],["cryptography",2],["materials",2],["sensing",1]],
+    maxSpecialty: 5,
+    maturity: ["pilot: 5","research: 1","revenue-stage: 1"],
+    companies: ["Brilliant","Menten AI","PsiQuantum","QuSecure","Rigetti Computing","SandboxAQ","Sense Photonics"],
+    insight: "San Francisco Bay is the most capital-dense hub in this top-10 view. Once nearby cities are included, the region reads as a corridor where software platforms, cryptography, materials, and hardware all sit close to capital and enterprise distribution channels."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 9",
+    title: "Singapore",
+    subtitle: "Compact software and communications node with a clear commercial story",
+    metrics: ["3 direct city count","3 hub total","$5.1m disclosed","66.7% funding coverage"],
+    specialties: [["software",2],["cryptography",1],["hardware",1]],
+    maxSpecialty: 2,
+    maturity: ["pilot: 2","research: 1"],
+    companies: ["Horizon Quantum","Horizon Quantum Computing","SpeQtral"],
+    insight: "Singapore is easy to read because the hub is compact and focused. Software-toolchain activity and quantum communications define the cluster, which makes it commercially legible even though the disclosed funding base is still small."
+  },
+  {
+    type: "city",
+    eyebrow: "Rank 10",
+    title: "Sydney",
+    subtitle: "Research-heavy hardware and control hub with strong long-term potential",
+    metrics: ["3 direct city count","3 hub total","$183.4m disclosed","33.3% funding coverage"],
+    specialties: [["hardware",2],["materials",1],["sensing",1],["software",1]],
+    maxSpecialty: 2,
+    maturity: ["research: 2","pilot: 1"],
+    companies: ["Diraq","Q-CTRL","Silicon Quantum Computing"],
+    insight: "Sydney is less commercially mature than London or Tel Aviv, but it remains strategically important because it combines deep research with control-stack capability. The cluster looks like an upstream innovation center that could matter more as hardware and system integration mature."
+  },
+  {
+    type: "close",
+    eyebrow: "Takeaway",
+    title: "What the deck shows",
+    lede: "Quantum innovation is concentrated in metro operating environments, not evenly distributed across countries. The strongest city hubs combine technical density with adjacent capital, software infrastructure, and enough maturity diversity to move beyond pure research narratives.",
+    bullets: [
+      "Corridors matter: London, Cambridge, and San Francisco all become more important when nearby cities are included.",
+      "Software is structurally central: several of the strongest hubs pair hardware with compilers, control stacks, orchestration, or cryptography layers.",
+      "Maturity is uneven: some cities are still research-heavy, while others already show production or revenue-stage signals.",
+      "Funding density sharpens the picture: San Francisco Bay, London, Cambridge, and Paris stand out once disclosed capital is layered onto startup count."
+    ]
+  }
+];
+
+function escapeHtml(value){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function renderCover(slide){
+  const panels = slide.panels.map(panel => {
+    if (panel.bullets) {
+      return `<div class="panel"><h3>${escapeHtml(panel.title)}</h3><ul class="signal-list">${panel.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div>`;
+    }
+    return `<div class="panel"><h3>${escapeHtml(panel.title)}</h3><p>${escapeHtml(panel.text)}</p></div>`;
+  }).join("");
+  const cards = slide.cards.map(card => `
+    <div class="city-card">
+      <div class="rank">Rank ${escapeHtml(card.rank)}</div>
+      <div class="city">${escapeHtml(card.city)}</div>
+      <div class="mini">${escapeHtml(card.mini)}</div>
+      <div class="money">${escapeHtml(card.money)}</div>
+    </div>`).join("");
+  return `
+    <div class="slide">
+      <div class="eyebrow">${escapeHtml(slide.eyebrow)}</div>
+      <h1>${escapeHtml(slide.title)}</h1>
+      <div class="lede">${escapeHtml(slide.lede)}</div>
+      <div class="meta">${slide.meta.map(item => `<div class="chip">${escapeHtml(item)}</div>`).join("")}</div>
+      <div class="hero-grid">${panels}</div>
+      <div class="city-grid">${cards}</div>
+      <div class="foot">Use arrow keys or the navigation buttons to move through the deck.</div>
+    </div>`;
+}
+
+function renderComparison(slide){
+  return `
+    <div class="slide">
+      <div class="eyebrow">${escapeHtml(slide.eyebrow)}</div>
+      <h2>${escapeHtml(slide.title)}</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>City</th>
+            <th>Direct</th>
+            <th>Hub</th>
+            <th>Disclosed Funding</th>
+            <th>Dominant Picture</th>
+            <th>Representative Companies</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${slide.rows.map(row => `
+            <tr>
+              <td class="city-name">${escapeHtml(row[0])}</td>
+              <td>${escapeHtml(row[1])}</td>
+              <td>${escapeHtml(row[2])}</td>
+              <td>${escapeHtml(row[3])}</td>
+              <td>${escapeHtml(row[4])}</td>
+              <td class="soft">${escapeHtml(row[5])}</td>
+            </tr>`).join("")}
+        </tbody>
+      </table>
+      <div class="note">${escapeHtml(slide.note)}</div>
+      <div class="foot">Top-10 ranking is based on direct city startup count from the dataset.</div>
+    </div>`;
+}
+
+function badgeClass(item){
+  if (item.startsWith("pilot")) return "badge pilot";
+  if (item.startsWith("research")) return "badge research";
+  if (item.startsWith("production")) return "badge production";
+  return "badge revenue-stage";
+}
+
+function colorFor(label){
+  if (label === "hardware") return "#0c6d7b";
+  if (label === "software") return "#d68a2f";
+  if (label === "cryptography") return "#5b7c8d";
+  if (label === "materials") return "#7a5c3e";
+  return "#8b4f7d";
+}
+
+function renderCity(slide){
+  const metrics = [
+    ["Direct Count", slide.metrics[0]],
+    ["Hub Total", slide.metrics[1]],
+    ["Disclosed Capital", slide.metrics[2]],
+    ["Funding Coverage", slide.metrics[3]]
+  ];
+  const bars = slide.specialties.map(([label, value]) => `
+    <div class="bar-row">
+      <div class="label">${escapeHtml(label)}</div>
+      <div class="track"><div class="fill" style="width:${(value / slide.maxSpecialty) * 100}%;background:${colorFor(label)}"></div></div>
+      <div>${escapeHtml(value)}</div>
+    </div>`).join("");
+  return `
+    <div class="slide">
+      <div class="eyebrow">${escapeHtml(slide.eyebrow)}</div>
+      <h2>${escapeHtml(slide.title)}</h2>
+      <div class="lede" style="font-size:20px;max-width:900px">${escapeHtml(slide.subtitle)}</div>
+      <div class="layout">
+        <div>
+          <div class="metrics">
+            ${metrics.map(([k,v]) => `<div class="metric"><div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v)}</div></div>`).join("")}
+          </div>
+          <div class="section">
+            <h3>City Snapshot</h3>
+            <div class="copy">${escapeHtml(slide.insight)}</div>
+          </div>
+          <div class="section">
+            <h3>Company Roster</h3>
+            <ul class="roster">${slide.companies.map(name => `<li>${escapeHtml(name)}</li>`).join("")}</ul>
+          </div>
+        </div>
+        <div>
+          <div class="panel">
+            <div class="mixes">
+              <div>
+                <h3>Specialty Mix</h3>
+                <div class="bars">${bars}</div>
+              </div>
+              <div>
+                <h3>Maturity Mix</h3>
+                <div class="maturity">${slide.maturity.map(item => `<div class="${badgeClass(item)}">${escapeHtml(item)}</div>`).join("")}</div>
+              </div>
+            </div>
+            <div class="note">This slide combines direct city ranking, widened hub count, disclosed funding total, specialty balance, and maturity distribution from the corresponding hub report.</div>
+          </div>
+        </div>
+      </div>
+      <div class="foot">Source: analysis/hub_competitive_landscape_${slide.title.toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"")}.md</div>
+    </div>`;
+}
+
+function renderClose(slide){
+  return `
+    <div class="slide">
+      <div class="eyebrow">${escapeHtml(slide.eyebrow)}</div>
+      <h2>${escapeHtml(slide.title)}</h2>
+      <div class="lede">${escapeHtml(slide.lede)}</div>
+      <div class="panel" style="margin-top:24px;max-width:980px">
+        <ul class="signal-list">${slide.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+      </div>
+      <div class="note">Recommended companion files: `analysis/top10_city_hubs_summary.md` for narrative comparison and each `analysis/hub_competitive_landscape_*.md` file for city-level detail.</div>
+      <div class="foot">Prepared for portfolio, investor, and ecosystem briefings.</div>
+    </div>`;
+}
+
+const deck = document.getElementById("deck");
+deck.innerHTML = slides.map(slide => {
+  if (slide.type === "cover") return renderCover(slide);
+  if (slide.type === "comparison") return renderComparison(slide);
+  if (slide.type === "city") return renderCity(slide);
+  return renderClose(slide);
+}).join("");
+
+const renderedSlides = Array.from(document.querySelectorAll(".slide"));
+const counter = document.getElementById("counter");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+let current = 0;
+
+function updateSlide(index){
+  current = (index + renderedSlides.length) % renderedSlides.length;
+  renderedSlides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+  counter.textContent = `${current + 1} / ${renderedSlides.length}`;
+}
+
+prevBtn.addEventListener("click", () => updateSlide(current - 1));
+nextBtn.addEventListener("click", () => updateSlide(current + 1));
+window.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown") updateSlide(current + 1);
+  if (event.key === "ArrowLeft" || event.key === "PageUp") updateSlide(current - 1);
+  if (event.key === "Home") updateSlide(0);
+  if (event.key === "End") updateSlide(renderedSlides.length - 1);
+});
+
+updateSlide(0);
+</script>
+</body>
+</html>

@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 110 km radius around 43.56, -79.95
 
 Total startups: **3**
+Disclosed funding total: **$157.6m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -12,6 +13,9 @@ Total startups: **3**
 | EvolutionQ | Waterloo, Ontario | Canada | cryptography, hardware, software | $5.5m | production |
 | ProteinQure | Toronto | Canada | software | $15.0m | pilot |
 | Xanadu | Toronto | Canada | hardware, software | $137.1m | production |
+
+## Company Roster
+- EvolutionQ, ProteinQure, Xanadu
 
 ## Specialty Mix
 | specialty | count | share_pct |

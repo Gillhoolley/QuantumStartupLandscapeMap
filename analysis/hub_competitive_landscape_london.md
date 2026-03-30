@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 130 km radius around 51.5072, -0.1276
 
 Total startups: **13**
+Disclosed funding total: **$579.1m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -22,6 +23,9 @@ Total startups: **13**
 | Quantum Motion | London | United Kingdom | hardware | $9.8m | research |
 | Riverlane | Cambridge | United Kingdom | software, hardware | $28.2m | pilot |
 | Universal Quantum | Brighton | United Kingdom | hardware | Undisclosed | research |
+
+## Company Roster
+- Cambridge Quantum Computing, Crypta Labs, Crypto Quantique, Nu Quantum, ORCA Computing, Oxford Quantum Circuits, PhaseCraft, Post-Quantum, Pqshield Ltd, Quantinuum, Quantum Motion, Riverlane, Universal Quantum
 
 ## Specialty Mix
 | specialty | count | share_pct |

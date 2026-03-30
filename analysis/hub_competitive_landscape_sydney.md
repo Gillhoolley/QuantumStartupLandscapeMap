@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 115 km radius around -33.8688, 151.2093
 
 Total startups: **3**
+Disclosed funding total: **$183.4m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -12,6 +13,9 @@ Total startups: **3**
 | Diraq | Sydney | Australia | hardware | Undisclosed | research |
 | Q-CTRL | Sydney | Australia | software, sensing | $183.4m | pilot |
 | Silicon Quantum Computing | Sydney | Australia | hardware, materials | Undisclosed | research |
+
+## Company Roster
+- Diraq, Q-CTRL, Silicon Quantum Computing
 
 ## Specialty Mix
 | specialty | count | share_pct |

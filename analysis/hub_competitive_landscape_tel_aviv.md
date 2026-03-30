@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 95 km radius around 32.0853, 34.7818
 
 Total startups: **5**
+Disclosed funding total: **$230.5m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -14,6 +15,9 @@ Total startups: **5**
 | Qedma | Tel Aviv | Israel | software | Undisclosed | pilot |
 | Quantum Machines | Tel Aviv | Israel | hardware, software | $73.0m | pilot |
 | Quantum Source | Tel Aviv | Israel | hardware | Undisclosed | research |
+
+## Company Roster
+- Classiq, LightSolver, Qedma, Quantum Machines, Quantum Source
 
 ## Specialty Mix
 | specialty | count | share_pct |

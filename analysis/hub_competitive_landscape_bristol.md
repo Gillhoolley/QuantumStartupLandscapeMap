@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 95 km radius around 51.4545, -2.5879
 
 Total startups: **3**
+Disclosed funding total: **$75.5m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -12,6 +13,9 @@ Total startups: **3**
 | KETS Quantum Security | Bristol | United Kingdom | cryptography, hardware | $4.4m | research |
 | Phasecraft | Bristol | United Kingdom | software, materials | $66.7m | pilot |
 | Qlm Technology Ltd | Bristol | United Kingdom | sensing, software | $4.4m | pilot |
+
+## Company Roster
+- KETS Quantum Security, Phasecraft, Qlm Technology Ltd
 
 ## Specialty Mix
 | specialty | count | share_pct |

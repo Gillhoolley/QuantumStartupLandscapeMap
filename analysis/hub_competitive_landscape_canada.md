@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: country = Canada
 
 Total startups: **10**
+Disclosed funding total: **$605.0m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -19,6 +20,9 @@ Total startups: **10**
 | Photonic | Vancouver | Canada | hardware | Undisclosed | research |
 | ProteinQure | Toronto | Canada | software | $15.0m | pilot |
 | Xanadu | Toronto | Canada | hardware, software | $137.1m | production |
+
+## Company Roster
+- 1QBit, Anyon Systems, D-Wave Quantum, D-Wave Systems, EvolutionQ, ISARA (company), Nord Quantique, Photonic, ProteinQure, Xanadu
 
 ## Specialty Mix
 | specialty | count | share_pct |

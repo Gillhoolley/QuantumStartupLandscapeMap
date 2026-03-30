@@ -5,6 +5,7 @@ Generated: 3/23/2026, 16:00:13 America/New_York
 Scope: 105 km radius around 37.7749, -122.4194
 
 Total startups: **7**
+Disclosed funding total: **$864.6m**
 
 ## Top Companies
 | company | city | country | specialties | funding | maturity |
@@ -16,6 +17,9 @@ Total startups: **7**
 | Rigetti Computing | Berkeley | United States | hardware, software | $269.5m | revenue-stage |
 | SandboxAQ | Palo Alto | United States | software, cryptography, materials | $500.0m | pilot |
 | Sense Photonics | San Francisco | United States | sensing, hardware, materials | $48.3m | research |
+
+## Company Roster
+- Brilliant, Menten AI, PsiQuantum, QuSecure, Rigetti Computing, SandboxAQ, Sense Photonics
 
 ## Specialty Mix
 | specialty | count | share_pct |
