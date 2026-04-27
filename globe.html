@@ -304,7 +304,13 @@
       {name:"C12 Quantum Electronics",country:"France",city:"Paris",region:"Europe",specialty:["hardware","materials"],website:"https://c12qe.com",lat:48.8566,lng:2.3522,short_profile:"Carbon nanotube qubit hardware."},
       {name:"Quobly",country:"France",city:"Grenoble",region:"Europe",specialty:["hardware"],website:"https://quobly.io",lat:45.1885,lng:5.7245,short_profile:"CMOS-compatible silicon quantum processors."},
       {name:"Multiverse Computing",country:"Spain",city:"San Sebastian",region:"Europe",specialty:["software"],website:"https://multiversecomputing.com",lat:43.3183,lng:-1.9812,short_profile:"Quantum AI and model compression."},
-      {name:"Qilimanjaro Quantum Tech",country:"Spain",city:"Barcelona",region:"Europe",specialty:["hardware","software"],website:"https://qilimanjaro.tech",lat:41.3851,lng:2.1734,short_profile:"Analog and gate-based quantum systems."},
+      {name:"Qilimanjaro Quantum Tech",country:"Spain",city:"Barcelona",region:"Europe",specialty:["hardware","software"],website:"https://qilimanjaro.tech",lat:41.3851,lng:2.1734,founded_year:2019,short_profile:"Analog and gate-based quantum systems."},
+      {name:"Arq Quantum Technologies",country:"Spain",city:"Barcelona",region:"Europe",specialty:["hardware"],website:"https://www.mwcbarcelona.com/exhibitors/35634-arq-quantum-technologies",lat:41.3874,lng:2.1686,founded_year:2025,short_profile:"Quantum internet hardware and repeater-node platform."},
+      {name:"shinephi",country:"Spain",city:"Barcelona",region:"Europe",specialty:["hardware","materials"],website:"https://shinephi.tech/",lat:41.3927,lng:2.1663,founded_year:2025,short_profile:"Photonics metrology hardware relevant to quantum and semiconductor manufacturing."},
+      {name:"Quside",country:"Spain",city:"Castelldefels",region:"Europe",specialty:["cryptography","hardware"],website:"https://quside.com",lat:41.2764,lng:1.9887,founded_year:2017,short_profile:"Quantum randomness and security infrastructure from the ICFO ecosystem."},
+      {name:"LuxQuanta",country:"Spain",city:"Castelldefels",region:"Europe",specialty:["cryptography","hardware"],website:"https://luxquanta.com/",lat:41.2759,lng:1.9875,founded_year:2021,short_profile:"Quantum key distribution systems for quantum-safe telecom security."},
+      {name:"Qurv Technologies",country:"Spain",city:"Castelldefels",region:"Europe",specialty:["materials","hardware"],website:"https://qurv.tech/",lat:41.2756,lng:1.9879,founded_year:2020,short_profile:"Quantum-dot and graphene image-sensor platform adjacent to the quantum photonics stack."},
+      {name:"MAPSI Photonics",country:"Spain",city:"Sabadell",region:"Europe",specialty:["materials","hardware"],website:"https://mapsiphotonics.com/",lat:41.5486,lng:2.1074,founded_year:2021,short_profile:"Photonics components company adjacent to the Barcelona quantum hardware ecosystem."},
       {name:"IQM Quantum Computers",country:"Finland",city:"Espoo",region:"Europe",specialty:["hardware","software"],website:"https://www.meetiqm.com",lat:60.2055,lng:24.6559,short_profile:"Superconducting full-stack quantum systems."},
       {name:"QuantWare",country:"Netherlands",city:"Delft",region:"Europe",specialty:["hardware"],website:"https://www.quantware.com",lat:52.0116,lng:4.3571,short_profile:"Scalable superconducting QPUs."},
       {name:"Qblox",country:"Netherlands",city:"Delft",region:"Europe",specialty:["hardware"],website:"https://qblox.com",lat:52.0116,lng:4.3571,short_profile:"Quantum control electronics."},
@@ -407,6 +413,10 @@
       'Quandela': '$88.0m',
       'Quantum Machines': '$73.0m',
       'Quantum Motion': '$9.8m',
+      'Quside': 'EUR 10m+',
+      'LuxQuanta': 'EUR 8.0m Series A',
+      'shinephi': 'EUR 1.0m seed',
+      'MAPSI Photonics': 'EUR 1.5m',
       'QuintessenceLabs': '$18.8m',
       'QunaSys': '$2.8m',
       'Rigetti Computing': '$269.5m',
@@ -431,7 +441,14 @@
       'PsiQuantum': 'pilot',
       'Xanadu': 'production',
       'Pasqal': 'production',
-      'Oxford Quantum Circuits': 'production'
+      'Oxford Quantum Circuits': 'production',
+      'Qilimanjaro Quantum Tech': 'pilot',
+      'Arq Quantum Technologies': 'research',
+      'shinephi': 'research',
+      'Quside': 'production',
+      'LuxQuanta': 'production',
+      'Qurv Technologies': 'research',
+      'MAPSI Photonics': 'pilot'
     };
     const partnershipByCompany = {
       'IonQ': ['AWS Braket', 'Azure Quantum', 'NVIDIA'],
@@ -451,7 +468,10 @@
       'Riverlane': ['Hardware OEMs', 'University Labs'],
       'Nu Quantum': ['Hardware OEMs', 'University Labs'],
       'Alice & Bob': ['NVIDIA', 'European Research Labs'],
-      'ORCA Computing': ['Enterprise Pilots', 'Cloud Providers']
+      'ORCA Computing': ['Enterprise Pilots', 'Cloud Providers'],
+      'Qilimanjaro Quantum Tech': ['Barcelona Supercomputing Center', 'CERN OQI', 'Qblox'],
+      'Quside': ['Telefónica Tech', 'Juniper Networks', 'Qrypt', 'EY'],
+      'LuxQuanta': ['AWS', 'Juniper Networks', 'ID Quantique', 'Telefónica']
     };
     const SAVED_VIEW_STORAGE_KEY = 'quantum_globe_saved_views_v1';
     const COUNTRIES_GEOJSON_URL = 'https://unpkg.com/world-atlas@2/countries-110m.json';
@@ -474,6 +494,7 @@
       paris: { label: 'Paris', lat: 48.8566, lng: 2.3522, radiusKm: 130 },
       london: { label: 'London', lat: 51.5072, lng: -0.1276, radiusKm: 130 },
       boston: { label: 'Boston', lat: 42.3601, lng: -71.0589, radiusKm: 120 },
+      barcelona: { label: 'Barcelona Metro', lat: 41.3851, lng: 2.1734, radiusKm: 50 },
       sf: { label: 'San Francisco Bay', lat: 37.7749, lng: -122.4194, radiusKm: 105 },
       tel_aviv: { label: 'Tel Aviv', lat: 32.0853, lng: 34.7818, radiusKm: 95 },
       cambridge_uk: { label: 'Cambridge (UK)', lat: 52.2053, lng: 0.1218, radiusKm: 95 },

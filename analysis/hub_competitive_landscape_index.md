@@ -2,7 +2,20 @@
 
 Generated: 3/23/2026, 16:00:13 America/New_York
 
+## Top 10 City Hubs Covered
+- London
+- Tel Aviv
+- Cambridge (UK)
+- Boston
+- Bristol
+- Kansas
+- Paris
+- San Francisco Bay
+- Singapore
+- Sydney
+
 Reports generated:
+- hub_competitive_landscape_barcelona
 - hub_competitive_landscape_paris
 - hub_competitive_landscape_london
 - hub_competitive_landscape_boston
